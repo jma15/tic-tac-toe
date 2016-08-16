@@ -44,6 +44,44 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
 
+    auto fileUtils = FileUtils::getInstance();
+    auto screenSize = glview->getFrameSize();
+    std::vector<std::string> resDirOrders;
+
+    // check which assests the device requires
+    if (1080 == screenSize.width || 1080 == screenSize.height)
+    {
+	    resDirOrders.push_back("1080p");
+	    resDirOrders.push_back("720p");
+	    resDirOrders.push_back("600p");
+	    resDirOrders.push_back("480p");
+
+	    glview->setDesignResolutionSize(1920, 1080, ResolutionPolicy::NO_BORDER);
+    }
+    else if (720 == screenSize.width || 720 == screenSize.height)
+    {
+	    resDirOrders.push_back("720p");
+	    resDirOrders.push_back("600p");
+	    resDirOrders.push_back("480p");
+
+	    glview->setDesignResolutionSize(1280, 720, ResolutionPolicy::NO_BORDER);
+    }
+    else if (600 == screenSize.width || 600 == screenSize.height)
+    {
+	    resDirOrders.push_back("600p");
+	    resDirOrders.push_back("480p");
+
+	    glview->setDesignResolutionSize(1067, 720, ResolutionPolicy::NO_BORDER);
+    }
+    else
+    {
+	    resDirOrders.push_back("480p");
+
+	    glview->setDesignResolutionSize(853, 480, ResolutionPolicy::NO_BORDER);
+    }
+
+    fileUtils->setSearchPaths(resDirOrders);
+
     register_all_packages();
 
     // create a scene. it's an autorelease object

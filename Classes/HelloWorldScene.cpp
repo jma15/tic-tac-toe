@@ -38,16 +38,8 @@ bool HelloWorld::init()
 	this->addChild(title_sprite, 0);
 
 	// title action
-	auto title_action = MoveBy::create(0.5, Point(visibleSize.width / 2, 0));
+	auto title_action = MoveBy::create(0.5, Vec2(visibleSize.width / 2, 0));
 	title_sprite->runAction(title_action);
-
-	//// add a "close" icon to exit the progress. it's an autorelease object
-	//auto closeItem = MenuItemImage::create(
-	//	"CloseNormal.png",
-	//	"CloseSelected.png",
-	//	CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
-	//closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width / 2,
-	//	origin.y + closeItem->getContentSize().height / 2));
 
 	// menu items
 	auto menu_item_1 = MenuItemFont::create("play 3x3 game", CC_CALLBACK_1(HelloWorld::play_3x3, this));
@@ -55,8 +47,19 @@ bool HelloWorld::init()
 	auto menu_item_3 = MenuItemFont::create("play 5x5 game", CC_CALLBACK_1(HelloWorld::play_5x5, this));
 	auto menu_item_4 = MenuItemFont::create("quit game", CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
+	menu_item_1->setColor(Color3B(0, 0, 0));
+	menu_item_2->setColor(Color3B(0, 0, 0));
+	menu_item_3->setColor(Color3B(0, 0, 0));
+	menu_item_4->setColor(Color3B(0, 0, 0));
+
+	menu_item_1->setFontNameObj("8514oem");
+	menu_item_2->setFontNameObj("8514oem");
+	menu_item_3->setFontNameObj("8514oem");
+	menu_item_4->setFontNameObj("8514oem");
+
 	// create menu, it's an autorelease object
 	auto menu = Menu::create(menu_item_1, menu_item_2, menu_item_3, menu_item_4, NULL);
+	menu->setPositionY(origin.y + (visibleSize.height / 2.25));
 	menu->alignItemsVerticallyWithPadding(20);
 	this->addChild(menu);
 

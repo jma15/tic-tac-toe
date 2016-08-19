@@ -14,6 +14,15 @@ public:
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
+
+    // new 3x3 game callback
+    void play_3x3(cocos2d::Ref* pSender);
+
+    // new 4x4 game callback
+    void play_4x4(cocos2d::Ref* pSender);
+
+    // new 5x5 game callback
+    void play_5x5(cocos2d::Ref* pSender);
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);

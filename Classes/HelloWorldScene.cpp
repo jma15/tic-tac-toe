@@ -86,9 +86,13 @@ void HelloWorld::play_3x3(Ref* pSender)
 void HelloWorld::play_4x4(Ref* pSender)
 {
 	CCLOG("play_4x4");
+    auto scene = Game::createScene(4);
+    Director::getInstance( )->replaceScene(scene);
 }
 
 void HelloWorld::play_5x5(Ref* pSender)
 {
 	CCLOG("play_5x5");
+    auto scene = Game::createScene(5);
+    Director::getInstance( )->replaceScene(scene);
 }

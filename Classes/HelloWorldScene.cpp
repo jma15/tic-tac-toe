@@ -79,7 +79,7 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 void HelloWorld::play_3x3(Ref* pSender)
 {
     CCLOG("play_3x3");
-    auto scene = Game::createScene();
+    auto scene = Game::createScene(3);
     Director::getInstance( )->replaceScene(scene);
 }
 

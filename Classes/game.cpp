@@ -3,9 +3,11 @@
 
 USING_NS_CC;
 
-Scene* Game::createScene(){
+int mode;
+Scene* Game::createScene(int playMode){
     auto scene = Scene::create();
     
+    mode = playMode;
     // 'layer' is an autorelease object
     auto layer = Game::create();
     
@@ -18,18 +20,17 @@ Scene* Game::createScene(){
 
 bool Game::init()
 {
-    CCLOG("TEST");
-
     if ( !Layer::init() )
     {
         return false;
     }
     
-    
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
-    auto label = Label::createWithTTF("label test","fonts/Marker Felt.ttf",32);
+    std::string gameModeString = "The game is " + std::to_string(mode);
+    
+    auto label = Label::createWithTTF(gameModeString, "fonts/Marker Felt.ttf",32);
     label->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(label);
 

@@ -4,12 +4,11 @@
 #include "cocos2d.h"
 #include "HelloWorldScene.h"
 
+
 class Game : public cocos2d::Layer
 {
-private:
-    
 public:
-    static cocos2d::Scene* createScene();
+    static cocos2d::Scene* createScene(int playMode);
     virtual bool init();
     
     // a selector callback

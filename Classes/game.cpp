@@ -1,5 +1,6 @@
 #include "game.h"
 #include "HelloWorldScene.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
@@ -25,7 +26,7 @@ bool Game::init()
         return false;
     }
     
-    Size visibleSize = Director::getInstance()->getVisibleSize();
+    visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
     std::string gameModeString = "The game is " + std::to_string(mode);
@@ -34,8 +35,33 @@ bool Game::init()
     label->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(label);
 
+    createBackButton();
     CCLOG("GAME");
     return true;
+}
+
+void Game::createBackButton()
+{
+    auto button = cocos2d::ui::Button::create("back.png");//put image in Constructor if needed
+    button->addTouchEventListener([&](Ref* sender, cocos2d::ui::Widget::TouchEventType type)
+                                  {
+                                      switch (type)
+                                      {
+                                          case ui::Widget::TouchEventType::BEGAN:
+                                              //CCLOG("Start Began");
+                                              break;
+                                          case ui::Widget::TouchEventType::ENDED:
+                                              //CCLOG("Start End");
+                                              break;
+                                          default:
+                                              CCLOG("Start Default");
+                                              break;
+                                      }
+                                  });
+    button->setPosition(Point(visibleSize.width * 0.9, (visibleSize.height * 0.05)));
+    button->setScale(0.3f);
+    this->addChild(button);
+    
 }
 
 void Game::menuCloseCallback(Ref* pSender)

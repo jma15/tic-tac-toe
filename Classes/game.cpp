@@ -48,13 +48,14 @@ void Game::createBackButton()
                                       switch (type)
                                       {
                                           case ui::Widget::TouchEventType::BEGAN:
+                                              goBackToTitle();
                                               //CCLOG("Start Began");
                                               break;
                                           case ui::Widget::TouchEventType::ENDED:
                                               //CCLOG("Start End");
                                               break;
                                           default:
-                                              CCLOG("Start Default");
+                                              //CCLOG("Start Default");
                                               break;
                                       }
                                   });
@@ -63,6 +64,13 @@ void Game::createBackButton()
     this->addChild(button);
     
 }
+
+void Game::goBackToTitle()
+{
+    auto scene = HelloWorld::createScene();
+    Director::getInstance( )->replaceScene(scene);
+}
+
 
 void Game::menuCloseCallback(Ref* pSender)
 {

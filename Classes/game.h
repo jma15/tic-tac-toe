@@ -16,6 +16,7 @@ public:
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     void createBackButton();
+    void goBackToTitle();
 
     CREATE_FUNC(Game);
     

@@ -139,17 +139,20 @@ void Game::gameMode()
     float gapy = (boardSizey/mode)*0.20f;
     float panelHeight = boardSizey/mode - gapy;
     
-    for(int i=0; i<3; i++)
-    {
-        //CCLOG("width is %f and gap is %f and panel widrh is %f", panelWidth*i, gap, panelWidth);
-        spriteArray[i]->setTextureRect(Rect(0.0, 0.0, panelWidthx, panelHeight));
-        spriteArray[i]->setAnchorPoint(Vec2(0,0));
-        spriteArray[i]->setPosition( boardSizeStartx + (panelWidthx+ gapx)*i, boardSizeStarty + (panelHeight+ gapy)*i);
-        spriteArray[i]->setColor(Color3B(192, 192, 192));
-        //CCLOG("position is %f", spriteArray[i]->getPositionX());
-        this->addChild(spriteArray[i]);
+    
+    for(int j = 0; j < mode; j++){
+        for(int i=0; i<3; i++)
+        {
+            int value = i + j*mode;
+            //CCLOG("width is %f and gap is %f and panel widrh is %f", panelWidth*i, gap, panelWidth);
+            spriteArray[value]->setTextureRect(Rect(0.0, 0.0, panelWidthx, panelHeight));
+            spriteArray[value]->setAnchorPoint(Vec2(0,0));
+            spriteArray[value]->setPosition( boardSizeStartx + (panelWidthx+ gapx)*i, boardSizeStarty + (panelHeight+ gapy)*j);
+            spriteArray[value]->setColor(Color3B(192, 192, 192));
+            //CCLOG("position is %f", spriteArray[i]->getPositionX());
+            this->addChild(spriteArray[value]);
+        }
     }
-
 }
 
 bool Game::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event)

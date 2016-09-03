@@ -91,14 +91,36 @@ void Game::createPanel()
     
     gameMode();
     
-    /*
-    panel1 = cocos2d::Sprite::create();
-    panel1->setTextureRect(Rect(0.0, 0.0, 50.0, 100));
-    panel1->setPosition(visibleSize.width/3, visibleSize.height/3);
-    panel1->setColor(Color3B(192, 192, 192));
+    // Use 80% of screen
+    float boardSizeEndx = visibleSize.width * 0.8f;
+    float boardSizeStartx = visibleSize.width * 0.2f;
+    float boardSizex = boardSizeEndx - boardSizeStartx;
+    // 10% gap between each panel
+    float gapx = (boardSizex/mode)*0.20f;
+    float panelWidthx = boardSizex/mode - gapx;
     
-    this->addChild(panel1);
-     */
+    // Use 80% of screen
+    float boardSizeEndy = visibleSize.height * 0.8f;
+    float boardSizeStarty = visibleSize.height * 0.2f;
+    float boardSizey = boardSizeEndy - boardSizeStarty;
+    // 10% gap between each panel
+    float gapy = (boardSizey/mode)*0.20f;
+    float panelHeight = boardSizey/mode - gapy;
+    
+    
+    for(int j = 0; j < mode; j++){
+        for(int i=0; i<mode; i++)
+        {
+            int value = i + j*mode;
+            //CCLOG("width is %f and gap is %f and panel widrh is %f", panelWidth*i, gap, panelWidth);
+            spriteArray[value]->setTextureRect(Rect(0.0, 0.0, panelWidthx, panelHeight));
+            spriteArray[value]->setAnchorPoint(Vec2(0,0));
+            spriteArray[value]->setPosition( boardSizeStartx + (panelWidthx+ gapx)*i, boardSizeStarty + (panelHeight+ gapy)*j);
+            spriteArray[value]->setColor(Color3B(192, 192, 192));
+            //CCLOG("position is %f", spriteArray[i]->getPositionX());
+            this->addChild(spriteArray[value]);
+        }
+    }
 }
 
 void Game::gameMode()
@@ -123,36 +145,6 @@ void Game::gameMode()
     spriteArray.push_back(panel8);
     spriteArray.push_back(panel9);
 
-    // Use 80% of screen
-    float boardSizeEndx = visibleSize.width * 0.8f;
-    float boardSizeStartx = visibleSize.width * 0.2f;
-    float boardSizex = boardSizeEndx - boardSizeStartx;
-    // 10% gap between each panel
-    float gapx = (boardSizex/mode)*0.20f;
-    float panelWidthx = boardSizex/mode - gapx;
-    
-    // Use 80% of screen
-    float boardSizeEndy = visibleSize.height * 0.8f;
-    float boardSizeStarty = visibleSize.height * 0.2f;
-    float boardSizey = boardSizeEndy - boardSizeStarty;
-    // 10% gap between each panel
-    float gapy = (boardSizey/mode)*0.20f;
-    float panelHeight = boardSizey/mode - gapy;
-    
-    
-    for(int j = 0; j < mode; j++){
-        for(int i=0; i<3; i++)
-        {
-            int value = i + j*mode;
-            //CCLOG("width is %f and gap is %f and panel widrh is %f", panelWidth*i, gap, panelWidth);
-            spriteArray[value]->setTextureRect(Rect(0.0, 0.0, panelWidthx, panelHeight));
-            spriteArray[value]->setAnchorPoint(Vec2(0,0));
-            spriteArray[value]->setPosition( boardSizeStartx + (panelWidthx+ gapx)*i, boardSizeStarty + (panelHeight+ gapy)*j);
-            spriteArray[value]->setColor(Color3B(192, 192, 192));
-            //CCLOG("position is %f", spriteArray[i]->getPositionX());
-            this->addChild(spriteArray[value]);
-        }
-    }
 }
 
 bool Game::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event)

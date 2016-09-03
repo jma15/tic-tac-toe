@@ -131,12 +131,20 @@ void Game::gameMode()
     float gapx = (boardSizex/mode)*0.20f;
     float panelWidthx = boardSizex/mode - gapx;
     
+    // Use 80% of screen
+    float boardSizeEndy = visibleSize.height * 0.8f;
+    float boardSizeStarty = visibleSize.height * 0.2f;
+    float boardSizey = boardSizeEndy - boardSizeStarty;
+    // 10% gap between each panel
+    float gapy = (boardSizey/mode)*0.20f;
+    float panelHeight = boardSizey/mode - gapy;
+    
     for(int i=0; i<3; i++)
     {
         //CCLOG("width is %f and gap is %f and panel widrh is %f", panelWidth*i, gap, panelWidth);
-        spriteArray[i]->setTextureRect(Rect(0.0, 0.0, panelWidthx, 100));
+        spriteArray[i]->setTextureRect(Rect(0.0, 0.0, panelWidthx, panelHeight));
         spriteArray[i]->setAnchorPoint(Vec2(0,0));
-        spriteArray[i]->setPosition( boardSizeStartx + (panelWidthx+ gapx)*i, visibleSize.height/3);
+        spriteArray[i]->setPosition( boardSizeStartx + (panelWidthx+ gapx)*i, boardSizeStarty + (panelHeight+ gapy)*i);
         spriteArray[i]->setColor(Color3B(192, 192, 192));
         //CCLOG("position is %f", spriteArray[i]->getPositionX());
         this->addChild(spriteArray[i]);

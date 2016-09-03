@@ -27,6 +27,16 @@ class Game : public cocos2d::Layer
     cocos2d::Sprite* panel14 = nullptr;
     cocos2d::Sprite* panel15 = nullptr;
     cocos2d::Sprite* panel16 = nullptr;
+    
+    cocos2d::Sprite* panel17 = nullptr;
+    cocos2d::Sprite* panel18 = nullptr;
+    cocos2d::Sprite* panel19 = nullptr;
+    cocos2d::Sprite* panel20 = nullptr;
+    cocos2d::Sprite* panel21 = nullptr;
+    cocos2d::Sprite* panel22 = nullptr;
+    cocos2d::Sprite* panel23 = nullptr;
+    cocos2d::Sprite* panel24 = nullptr;
+    cocos2d::Sprite* panel25 = nullptr;
 
 
 public:

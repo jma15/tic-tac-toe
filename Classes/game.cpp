@@ -126,10 +126,10 @@ void Game::gameMode()
     // Use 80% of screen
     float boardSizeEndx = visibleSize.width * 0.8f;
     float boardSizeStartx = visibleSize.width * 0.2f;
-    float boardSize = boardSizeEndx - boardSizeStartx;
+    float boardSizex = boardSizeEndx - boardSizeStartx;
     // 10% gap between each panel
-    float gapx = (boardSize/mode)*0.20f;
-    float panelWidthx = boardSize/mode - gapx;
+    float gapx = (boardSizex/mode)*0.20f;
+    float panelWidthx = boardSizex/mode - gapx;
     
     for(int i=0; i<3; i++)
     {

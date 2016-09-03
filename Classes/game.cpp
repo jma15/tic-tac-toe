@@ -124,24 +124,22 @@ void Game::gameMode()
     spriteArray.push_back(panel9);
 
     // Use 80% of screen
-    float boardSizeEnd = visibleSize.width * 0.8f;
-    float boardSizeStart = visibleSize.width * 0.2f;
-    float boardSize = boardSizeEnd - boardSizeStart;
+    float boardSizeEndx = visibleSize.width * 0.8f;
+    float boardSizeStartx = visibleSize.width * 0.2f;
+    float boardSize = boardSizeEndx - boardSizeStartx;
     // 10% gap between each panel
-    float gap = (boardSize/mode)*0.20f;
-    float panelWidth = boardSize/mode - gap;
+    float gapx = (boardSize/mode)*0.20f;
+    float panelWidthx = boardSize/mode - gapx;
     
-    int width = 0;
     for(int i=0; i<3; i++)
     {
         //CCLOG("width is %f and gap is %f and panel widrh is %f", panelWidth*i, gap, panelWidth);
-        spriteArray[i]->setTextureRect(Rect(0.0, 0.0, panelWidth, 100));
+        spriteArray[i]->setTextureRect(Rect(0.0, 0.0, panelWidthx, 100));
         spriteArray[i]->setAnchorPoint(Vec2(0,0));
-        spriteArray[i]->setPosition( boardSizeStart + (panelWidth+ gap)*i, visibleSize.height/3);
+        spriteArray[i]->setPosition( boardSizeStartx + (panelWidthx+ gapx)*i, visibleSize.height/3);
         spriteArray[i]->setColor(Color3B(192, 192, 192));
         //CCLOG("position is %f", spriteArray[i]->getPositionX());
         this->addChild(spriteArray[i]);
-        width = width + 200;
     }
 
 }

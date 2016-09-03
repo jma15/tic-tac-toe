@@ -29,14 +29,17 @@ bool Game::init()
     visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
+    /*
     std::string gameModeString = "The game is " + std::to_string(mode);
     
     auto label = Label::createWithTTF(gameModeString, "fonts/Marker Felt.ttf",32);
     label->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(label);
-
+*/
+    // Back button for previous page
     createBackButton();
-    CCLOG("GAME");
+    
+    // Create panel based on mode
     createPanel();
     
     //single touch
@@ -88,7 +91,7 @@ void Game::goBackToTitle()
 
 void Game::createPanel()
 {
-    
+    // Declare the sprites
     gameMode();
     
     // Check condition, incase mode and size does not match

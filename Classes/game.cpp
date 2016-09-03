@@ -151,6 +151,25 @@ void Game::gameMode()
     spriteArray.push_back(panel7);
     spriteArray.push_back(panel8);
     spriteArray.push_back(panel9);
+    
+    if(mode > 3)
+    {
+        panel10 = cocos2d::Sprite::create();
+        panel11 = cocos2d::Sprite::create();
+        panel12 = cocos2d::Sprite::create();
+        panel13 = cocos2d::Sprite::create();
+        panel14 = cocos2d::Sprite::create();
+        panel15 = cocos2d::Sprite::create();
+        panel16 = cocos2d::Sprite::create();
+        
+        spriteArray.push_back(panel10);
+        spriteArray.push_back(panel11);
+        spriteArray.push_back(panel12);
+        spriteArray.push_back(panel13);
+        spriteArray.push_back(panel14);
+        spriteArray.push_back(panel15);
+        spriteArray.push_back(panel16);
+    }
 
 }
 

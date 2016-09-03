@@ -19,6 +19,15 @@ class Game : public cocos2d::Layer
     cocos2d::Sprite* panel8 = nullptr;
     cocos2d::Sprite* panel9 = nullptr;
     std::vector<cocos2d::Sprite*> spriteArray;
+    
+    cocos2d::Sprite* panel10 = nullptr;
+    cocos2d::Sprite* panel11 = nullptr;
+    cocos2d::Sprite* panel12 = nullptr;
+    cocos2d::Sprite* panel13 = nullptr;
+    cocos2d::Sprite* panel14 = nullptr;
+    cocos2d::Sprite* panel15 = nullptr;
+    cocos2d::Sprite* panel16 = nullptr;
+
 
 public:
     static cocos2d::Scene* createScene(int playMode);

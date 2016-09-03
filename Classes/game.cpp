@@ -37,6 +37,21 @@ bool Game::init()
 
     createBackButton();
     CCLOG("GAME");
+    createPanel();
+    
+    //single touch
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->setSwallowTouches(true);
+    //detect a touch
+    touchListener->onTouchBegan = CC_CALLBACK_2(Game::onTouchBegan, this);
+    //detect a touch and hold
+    touchListener->onTouchMoved = CC_CALLBACK_2(Game::onTouchMoved, this);
+    //detect end of touch
+    touchListener->onTouchEnded = CC_CALLBACK_2(Game::onTouchEnded, this);
+    //detect touch cancel
+    touchListener->onTouchCancelled = CC_CALLBACK_2(Game::onTouchCancelled, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
     return true;
 }
 
@@ -71,6 +86,79 @@ void Game::goBackToTitle()
     Director::getInstance( )->replaceScene(scene);
 }
 
+void Game::createPanel()
+{
+    
+    gameMode();
+    
+    /*
+    panel1 = cocos2d::Sprite::create();
+    panel1->setTextureRect(Rect(0.0, 0.0, 50.0, 100));
+    panel1->setPosition(visibleSize.width/3, visibleSize.height/3);
+    panel1->setColor(Color3B(192, 192, 192));
+    
+    this->addChild(panel1);
+     */
+}
+
+void Game::gameMode()
+{
+    panel1 = cocos2d::Sprite::create();
+    panel2 = cocos2d::Sprite::create();
+    panel3 = cocos2d::Sprite::create();
+    panel4 = cocos2d::Sprite::create();
+    panel5 = cocos2d::Sprite::create();
+    panel6 = cocos2d::Sprite::create();
+    panel7 = cocos2d::Sprite::create();
+    panel8 = cocos2d::Sprite::create();
+    panel9 = cocos2d::Sprite::create();
+
+    spriteArray.push_back(panel1);
+    spriteArray.push_back(panel2);
+    spriteArray.push_back(panel3);
+    spriteArray.push_back(panel4);
+    spriteArray.push_back(panel5);
+    spriteArray.push_back(panel6);
+    spriteArray.push_back(panel7);
+    spriteArray.push_back(panel8);
+    spriteArray.push_back(panel9);
+
+    // Use 80% of screen
+    float boardSizeEnd = visibleSize.width * 0.8f;
+    float boardSizeStart = visibleSize.width * 0.2f;
+    float boardSize = boardSizeEnd - boardSizeStart;
+    // 10% gap between each panel
+    float gap = (boardSize/mode)*0.20f;
+    float panelWidth = boardSize/mode - gap;
+    
+    int width = 0;
+    for(int i=0; i<3; i++)
+    {
+        //CCLOG("width is %f and gap is %f and panel widrh is %f", panelWidth*i, gap, panelWidth);
+        spriteArray[i]->setTextureRect(Rect(0.0, 0.0, panelWidth, 100));
+        spriteArray[i]->setAnchorPoint(Vec2(0,0));
+        spriteArray[i]->setPosition( boardSizeStart + (panelWidth+ gap)*i, visibleSize.height/3);
+        spriteArray[i]->setColor(Color3B(192, 192, 192));
+        //CCLOG("position is %f", spriteArray[i]->getPositionX());
+        this->addChild(spriteArray[i]);
+        width = width + 200;
+    }
+
+}
+
+bool Game::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event)
+{
+    auto sprite = event->getCurrentTarget();
+    Point s = touch->getLocation();
+    CCLOG("TouchBegin x => %f  y => %f tag is %d", s.x, s.y, sprite->getTag());
+    
+    if(panel1->boundingBox().containsPoint(s)){
+        CCLOG("In the SPRITEEE");
+
+    }
+    
+    return true;
+}
 
 void Game::menuCloseCallback(Ref* pSender)
 {

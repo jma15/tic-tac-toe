@@ -9,6 +9,17 @@ class Game : public cocos2d::Layer
 {
     
     cocos2d::Size visibleSize;
+    cocos2d::Sprite* panel1 = nullptr;
+    cocos2d::Sprite* panel2 = nullptr;
+    cocos2d::Sprite* panel3 = nullptr;
+    cocos2d::Sprite* panel4 = nullptr;
+    cocos2d::Sprite* panel5 = nullptr;
+    cocos2d::Sprite* panel6 = nullptr;
+    cocos2d::Sprite* panel7 = nullptr;
+    cocos2d::Sprite* panel8 = nullptr;
+    cocos2d::Sprite* panel9 = nullptr;
+    std::vector<cocos2d::Sprite*> spriteArray;
+
 public:
     static cocos2d::Scene* createScene(int playMode);
     virtual bool init();
@@ -17,6 +28,9 @@ public:
     void menuCloseCallback(cocos2d::Ref* pSender);
     void createBackButton();
     void goBackToTitle();
+    void createPanel();
+    bool onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event);
+    void gameMode();
 
     CREATE_FUNC(Game);
     

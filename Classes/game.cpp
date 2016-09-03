@@ -91,6 +91,12 @@ void Game::createPanel()
     
     gameMode();
     
+    // Check condition, incase mode and size does not match
+    if(mode*mode != spriteArray.size())
+    {
+        return;
+    }
+    
     // Use 80% of screen
     float boardSizeEndx = visibleSize.width * 0.8f;
     float boardSizeStartx = visibleSize.width * 0.2f;
@@ -125,6 +131,7 @@ void Game::createPanel()
 
 void Game::gameMode()
 {
+    // Create basic 3x3 declaration. Need same for 4x4 and 5x5
     panel1 = cocos2d::Sprite::create();
     panel2 = cocos2d::Sprite::create();
     panel3 = cocos2d::Sprite::create();

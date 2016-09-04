@@ -277,6 +277,42 @@ void Game::whichPanel(Point s)
     {
         playerPanelAdd(16);
     }
+    else if(mode == 5 && panel17->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(17);
+    }
+    else if(mode == 5 && panel18->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(18);
+    }
+    else if(mode == 5 && panel19->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(19);
+    }
+    else if(mode == 5 && panel20->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(20);
+    }
+    else if(mode == 5 && panel21->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(21);
+    }
+    else if(mode == 5 && panel22->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(22);
+    }
+    else if(mode == 5 && panel23->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(23);
+    }
+    else if(mode == 5 && panel24->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(24);
+    }
+    else if(mode == 5 && panel25->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(25);
+    }
 }
 
 void Game::playerPanelAdd(int panel)

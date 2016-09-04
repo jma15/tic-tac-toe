@@ -1,3 +1,4 @@
+#include "Player.h"
 #include "game.h"
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
@@ -5,6 +6,8 @@
 USING_NS_CC;
 
 int mode;
+int playerMove = 1;
+
 Scene* Game::createScene(int playMode){
     auto scene = Scene::create();
     
@@ -114,11 +117,12 @@ void Game::createPanel()
     float panelHeight = boardSizey/mode - gapy;
     
     
-    for(int j = 0; j < mode; j++){
-        for(int i=0; i<mode; i++)
+    for(int j = 0; j < mode; j++)
+    {
+        for(int i = 0; i < mode; i++)
         {
             int value = i + j*mode;
-            //CCLOG("width is %f and gap is %f and panel widrh is %f", panelWidth*i, gap, panelWidth);
+            //CCLOG("width is %f and gap is %f and panel width is %f", panelWidth*i, gap, panelWidth);
             spriteArray[value]->setTextureRect(Rect(0.0, 0.0, panelWidthx, panelHeight));
             spriteArray[value]->setAnchorPoint(Vec2(0,0));
             spriteArray[value]->setPosition( boardSizeStartx + (panelWidthx+ gapx)*i, boardSizeStarty + (panelHeight+ gapy)*j);

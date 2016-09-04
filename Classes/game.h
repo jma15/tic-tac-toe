@@ -43,7 +43,9 @@ public:
 	void createPanel();
 	bool onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event);
 	void gameMode();
-    bool playerPanelAdd(int panel);
+    void whichPanel(cocos2d::Point s);
+    void playerPanelAdd(int panel);
+    void switchTurns();
 
 	CREATE_FUNC(Game);
 

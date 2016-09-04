@@ -20,6 +20,8 @@ void Player::panelAdd(int panel)
 		panels[panel - 1] = true;
 	else
 		CCLOG("ERROR: PANEL INDEX LESS THAN 1");
+    
+    CCLOG("size is %d", sizeof(panels));
 }
 
 bool Player::didWin()

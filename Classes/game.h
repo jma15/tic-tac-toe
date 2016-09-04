@@ -62,6 +62,7 @@ public:
     void whichPanel(cocos2d::Point s);
     void playerPanelAdd(int panel);
     void switchTurns();
+    void setDisplayOpacity();
 
 	CREATE_FUNC(Game);
 

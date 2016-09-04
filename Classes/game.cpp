@@ -129,6 +129,7 @@ void Game::createDisplay()
     labelTwo->setPosition(labelTwoPositionX, labelTwoPositionY);
     this->addChild(labelOne);
     this->addChild(labelTwo);
+    setDisplayOpacity();
 }
 
 void Game::createPanel()
@@ -364,6 +365,7 @@ void Game::playerPanelAdd(int panel)
     if(playerMove == 1) playerOne.panelAdd(panel);
     else playerTwo.panelAdd(panel);
     switchTurns();
+    setDisplayOpacity();
 }
 
 void Game::switchTurns()
@@ -371,6 +373,24 @@ void Game::switchTurns()
     // Switch to players turn
     if(playerMove == 1) playerMove = 2;
     else playerMove = 1;
+}
+
+void Game::setDisplayOpacity()
+{
+    if(playerMove == 1)
+    {
+        labelTwo->setOpacity(128);
+        labelTwoBackground->setOpacity(128);
+        labelOne->setOpacity(255);
+        labelOneBackground->setOpacity(255);
+    }
+    else
+    {
+        labelOne->setOpacity(128);
+        labelOneBackground->setOpacity(128);
+        labelTwo->setOpacity(255);
+        labelTwoBackground->setOpacity(255);
+    }
 }
 
 void Game::menuCloseCallback(Ref* pSender)

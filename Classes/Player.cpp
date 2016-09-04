@@ -49,6 +49,32 @@ bool Player::didWin()
 		}
 		break;
 	case 4:
+		if (panels[1])
+		{
+			if ((panels[2] && panels[3] && panels[4])
+				|| (panels[5] && panels[9] && panels[13])
+				|| (panels[6] && panels[11] && panels[16]))
+				return true;
+		}
+		if (panels[10])
+		{
+			if ((panels[9] && panels[11] && panels[12])
+				|| (panels[2] && panels[6] && panels[14])
+				|| (panels[4] && panels[7] && panels[13]))
+				return true;
+		}
+		if (panels[7])
+		{
+			if ((panels[5] && panels[6] && panels[8])
+				|| (panels[3] && panels[11] && panels[15]))
+				return true;
+		}
+		if (panels[16])
+		{
+			if ((panels[13] && panels[14] && panels[15])
+				|| (panels[4] && panels[8] && panels[12]))
+				return true;
+		}
 		break;
 	case 5:
 		break;

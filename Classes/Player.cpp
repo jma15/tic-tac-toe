@@ -6,7 +6,7 @@ USING_NS_CC;
 Player::Player(int gameMode)
 {
 	mode = gameMode;
-	panels = new bool[gameMode * gameMode];
+	panels = new bool[gameMode * gameMode + 1];
 }
 
 Player::~Player()
@@ -17,7 +17,7 @@ Player::~Player()
 void Player::panelAdd(int panel)
 {
 	if (panel > 0)
-		panels[panel - 1] = true;
+		panels[panel] = true;
 	else
 		CCLOG("ERROR: PANEL INDEX LESS THAN 1");
 }

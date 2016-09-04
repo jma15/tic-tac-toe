@@ -31,6 +31,10 @@ bool Game::init()
     
     visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    // create players
+    Player playerOne = Player(mode);
+    Player playerTwo = Player(mode);
     
     std::string gameModeString = "The game is " + std::to_string(mode);
     

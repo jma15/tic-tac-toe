@@ -39,6 +39,11 @@ class Game : public cocos2d::Layer
     
     Player playerOne = Player(3);
     Player playerTwo = Player(3);
+    
+    cocos2d::Label * labelOne;
+    cocos2d::Sprite* labelOneBackground;
+    cocos2d::Label * labelTwo;
+    cocos2d::Sprite* labelTwoBackground;
 
 
 public:
@@ -50,12 +55,14 @@ public:
 	void menuCloseCallback(cocos2d::Ref* pSender);
 	void createBackButton();
 	void goBackToTitle();
+    void createDisplay();
 	void createPanel();
 	bool onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event);
 	void gameMode();
     void whichPanel(cocos2d::Point s);
     void playerPanelAdd(int panel);
     void switchTurns();
+    void setDisplayOpacity();
 
 	CREATE_FUNC(Game);
 

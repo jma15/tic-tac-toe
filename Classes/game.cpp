@@ -38,6 +38,7 @@ bool Game::init()
     
     createBackButton();
     CCLOG("GAME");
+    createDisplay();
     createPanel();
     
     //single touch
@@ -85,6 +86,50 @@ void Game::goBackToTitle()
 {
     auto scene = HelloWorld::createScene();
     Director::getInstance( )->replaceScene(scene);
+}
+
+void Game::createDisplay()
+{
+    //std::string gameModeString = "The game is " + std::to_string(mode);
+    
+    // declare percentage
+    float labelOnePositionX = 0;
+    float labelOnePositionY = visibleSize.height*0.90f;
+    float labelTwoPositionX = visibleSize.width*0.81f;
+    float labelTwoPositionY = visibleSize.height*0.90f;
+    float labelWidth = visibleSize.width * 0.18f;
+    
+    // create label one
+    labelOne = Label::createWithTTF("Player One", "fonts/Marker Felt.ttf",32);
+    labelOne->setAnchorPoint(Vec2(0,0));
+    
+    labelTwo = Label::createWithTTF("Player Two", "fonts/Marker Felt.ttf",32);
+    labelTwo->setAnchorPoint(Vec2(0,0));
+    
+    labelOne->setWidth(labelWidth);
+    labelTwo->setWidth(labelWidth);
+    
+    // create background color
+    labelOneBackground = cocos2d::Sprite::create();
+    labelOneBackground->setTextureRect(Rect(0.0, 0.0, labelOne->getWidth(), labelOne->getWidth()));
+    labelOneBackground->setAnchorPoint(Vec2(0,0));
+    labelOneBackground->setPosition(labelOnePositionX, labelOnePositionY);
+    labelOneBackground->setColor(Color3B(0, 128, 0));
+    this->addChild(labelOneBackground);
+    
+    labelTwoBackground = cocos2d::Sprite::create();
+    labelTwoBackground->setTextureRect(Rect(0.0, 0.0, labelTwo->getWidth(), labelTwo->getWidth()));
+    labelTwoBackground->setAnchorPoint(Vec2(0,0));
+    labelTwoBackground->setPosition(labelTwoPositionX, labelTwoPositionY);
+    labelTwoBackground->setColor(Color3B(255, 0, 0));
+    this->addChild(labelTwoBackground);
+    
+    // add label with words
+    labelOne->setPosition(labelOnePositionX, labelOnePositionY);
+    labelTwo->setPosition(labelTwoPositionX, labelTwoPositionY);
+    this->addChild(labelOne);
+    this->addChild(labelTwo);
+    setDisplayOpacity();
 }
 
 void Game::createPanel()
@@ -320,6 +365,7 @@ void Game::playerPanelAdd(int panel)
     if(playerMove == 1) playerOne.panelAdd(panel);
     else playerTwo.panelAdd(panel);
     switchTurns();
+    setDisplayOpacity();
 }
 
 void Game::switchTurns()
@@ -327,6 +373,24 @@ void Game::switchTurns()
     // Switch to players turn
     if(playerMove == 1) playerMove = 2;
     else playerMove = 1;
+}
+
+void Game::setDisplayOpacity()
+{
+    if(playerMove == 1)
+    {
+        labelTwo->setOpacity(128);
+        labelTwoBackground->setOpacity(128);
+        labelOne->setOpacity(255);
+        labelOneBackground->setOpacity(255);
+    }
+    else
+    {
+        labelOne->setOpacity(128);
+        labelOneBackground->setOpacity(128);
+        labelTwo->setOpacity(255);
+        labelTwoBackground->setOpacity(255);
+    }
 }
 
 void Game::menuCloseCallback(Ref* pSender)

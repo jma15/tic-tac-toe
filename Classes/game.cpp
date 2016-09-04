@@ -213,103 +213,103 @@ bool Game::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event)
 void Game::whichPanel(Point s)
 {
     
-    if(mode == 3 && panel1->boundingBox().containsPoint(s))
+    if(panel1->boundingBox().containsPoint(s))
     {
         playerPanelAdd(1);
     }
-    else if(mode == 3 && panel2->boundingBox().containsPoint(s))
+    else if(panel2->boundingBox().containsPoint(s))
     {
         playerPanelAdd(2);
     }
-    else if(mode == 3 && panel3->boundingBox().containsPoint(s))
+    else if(panel3->boundingBox().containsPoint(s))
     {
         playerPanelAdd(3);
     }
-    else if(mode == 3 && panel4->boundingBox().containsPoint(s))
+    else if(panel4->boundingBox().containsPoint(s))
     {
         playerPanelAdd(4);
     }
-    else if(mode == 3 && panel5->boundingBox().containsPoint(s))
+    else if(panel5->boundingBox().containsPoint(s))
     {
         playerPanelAdd(5);
     }
-    else if(mode == 3 && panel6->boundingBox().containsPoint(s))
+    else if(panel6->boundingBox().containsPoint(s))
     {
         playerPanelAdd(6);
     }
-    else if(mode == 3 && panel7->boundingBox().containsPoint(s))
+    else if(panel7->boundingBox().containsPoint(s))
     {
         playerPanelAdd(7);
     }
-    else if(mode == 3 && panel8->boundingBox().containsPoint(s))
+    else if(panel8->boundingBox().containsPoint(s))
     {
         playerPanelAdd(8);
     }
-    else if(mode == 3 && panel9->boundingBox().containsPoint(s))
+    else if(panel9->boundingBox().containsPoint(s))
     {
         playerPanelAdd(9);
     }
-    else if(mode == 4 && panel10->boundingBox().containsPoint(s))
+    else if(mode > 3 && panel10->boundingBox().containsPoint(s))
     {
         playerPanelAdd(10);
     }
-    else if(mode == 4 && panel11->boundingBox().containsPoint(s))
+    else if(mode > 3 && panel11->boundingBox().containsPoint(s))
     {
         playerPanelAdd(11);
     }
-    else if(mode == 4 && panel12->boundingBox().containsPoint(s))
+    else if(mode > 3 && panel12->boundingBox().containsPoint(s))
     {
         playerPanelAdd(12);
     }
-    else if(mode == 4 && panel13->boundingBox().containsPoint(s))
+    else if(mode > 3 && panel13->boundingBox().containsPoint(s))
     {
         playerPanelAdd(13);
     }
-    else if(mode == 4 && panel14->boundingBox().containsPoint(s))
+    else if(mode > 3 && panel14->boundingBox().containsPoint(s))
     {
         playerPanelAdd(14);
     }
-    else if(mode == 4 && panel15->boundingBox().containsPoint(s))
+    else if(mode > 3 && panel15->boundingBox().containsPoint(s))
     {
         playerPanelAdd(15);
     }
-    else if(mode == 4 && panel16->boundingBox().containsPoint(s))
+    else if(mode > 3 && panel16->boundingBox().containsPoint(s))
     {
         playerPanelAdd(16);
     }
-    else if(mode == 5 && panel17->boundingBox().containsPoint(s))
+    else if(mode > 4 && panel17->boundingBox().containsPoint(s))
     {
         playerPanelAdd(17);
     }
-    else if(mode == 5 && panel18->boundingBox().containsPoint(s))
+    else if(mode > 4 && panel18->boundingBox().containsPoint(s))
     {
         playerPanelAdd(18);
     }
-    else if(mode == 5 && panel19->boundingBox().containsPoint(s))
+    else if(mode > 4 && panel19->boundingBox().containsPoint(s))
     {
         playerPanelAdd(19);
     }
-    else if(mode == 5 && panel20->boundingBox().containsPoint(s))
+    else if(mode > 4 && panel20->boundingBox().containsPoint(s))
     {
         playerPanelAdd(20);
     }
-    else if(mode == 5 && panel21->boundingBox().containsPoint(s))
+    else if(mode > 4 && panel21->boundingBox().containsPoint(s))
     {
         playerPanelAdd(21);
     }
-    else if(mode == 5 && panel22->boundingBox().containsPoint(s))
+    else if(mode > 4 && panel22->boundingBox().containsPoint(s))
     {
         playerPanelAdd(22);
     }
-    else if(mode == 5 && panel23->boundingBox().containsPoint(s))
+    else if(mode > 4 && panel23->boundingBox().containsPoint(s))
     {
         playerPanelAdd(23);
     }
-    else if(mode == 5 && panel24->boundingBox().containsPoint(s))
+    else if(mode > 4 && panel24->boundingBox().containsPoint(s))
     {
         playerPanelAdd(24);
     }
-    else if(mode == 5 && panel25->boundingBox().containsPoint(s))
+    else if(mode > 4 && panel25->boundingBox().containsPoint(s))
     {
         playerPanelAdd(25);
     }

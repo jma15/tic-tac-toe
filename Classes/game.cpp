@@ -33,15 +33,9 @@ bool Game::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     // create players
-    Player playerOne = Player(mode);
-    Player playerTwo = Player(mode);
+    playerOne = Player(mode);
+    playerTwo = Player(mode);
     
-    std::string gameModeString = "The game is " + std::to_string(mode);
-    
-    auto label = Label::createWithTTF(gameModeString, "fonts/Marker Felt.ttf",32);
-    label->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-    this->addChild(label);
-
     createBackButton();
     CCLOG("GAME");
     createPanel();
@@ -160,6 +154,7 @@ void Game::gameMode()
     spriteArray.push_back(panel8);
     spriteArray.push_back(panel9);
     
+    // mode 4 and 5
     if(mode > 3)
     {
         panel10 = cocos2d::Sprite::create();
@@ -178,6 +173,30 @@ void Game::gameMode()
         spriteArray.push_back(panel15);
         spriteArray.push_back(panel16);
     }
+    
+    // mode 5
+    if(mode > 4)
+    {
+        panel17 = cocos2d::Sprite::create();
+        panel18 = cocos2d::Sprite::create();
+        panel19 = cocos2d::Sprite::create();
+        panel20 = cocos2d::Sprite::create();
+        panel21 = cocos2d::Sprite::create();
+        panel22 = cocos2d::Sprite::create();
+        panel23 = cocos2d::Sprite::create();
+        panel24 = cocos2d::Sprite::create();
+        panel25 = cocos2d::Sprite::create();
+        
+        spriteArray.push_back(panel17);
+        spriteArray.push_back(panel18);
+        spriteArray.push_back(panel19);
+        spriteArray.push_back(panel20);
+        spriteArray.push_back(panel21);
+        spriteArray.push_back(panel22);
+        spriteArray.push_back(panel23);
+        spriteArray.push_back(panel24);
+        spriteArray.push_back(panel25);
+    }
 
 }
 
@@ -186,13 +205,128 @@ bool Game::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event)
     auto sprite = event->getCurrentTarget();
     Point s = touch->getLocation();
     CCLOG("TouchBegin x => %f  y => %f tag is %d", s.x, s.y, sprite->getTag());
-    
-    if(panel1->boundingBox().containsPoint(s)){
-        CCLOG("In the SPRITEEE");
-
-    }
+    whichPanel(s);
     
     return true;
+}
+
+void Game::whichPanel(Point s)
+{
+    
+    if(panel1->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(1);
+    }
+    else if(panel2->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(2);
+    }
+    else if(panel3->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(3);
+    }
+    else if(panel4->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(4);
+    }
+    else if(panel5->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(5);
+    }
+    else if(panel6->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(6);
+    }
+    else if(panel7->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(7);
+    }
+    else if(panel8->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(8);
+    }
+    else if(panel9->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(9);
+    }
+    else if(mode > 3 && panel10->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(10);
+    }
+    else if(mode > 3 && panel11->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(11);
+    }
+    else if(mode > 3 && panel12->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(12);
+    }
+    else if(mode > 3 && panel13->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(13);
+    }
+    else if(mode > 3 && panel14->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(14);
+    }
+    else if(mode > 3 && panel15->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(15);
+    }
+    else if(mode > 3 && panel16->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(16);
+    }
+    else if(mode > 4 && panel17->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(17);
+    }
+    else if(mode > 4 && panel18->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(18);
+    }
+    else if(mode > 4 && panel19->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(19);
+    }
+    else if(mode > 4 && panel20->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(20);
+    }
+    else if(mode > 4 && panel21->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(21);
+    }
+    else if(mode > 4 && panel22->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(22);
+    }
+    else if(mode > 4 && panel23->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(23);
+    }
+    else if(mode > 4 && panel24->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(24);
+    }
+    else if(mode > 4 && panel25->boundingBox().containsPoint(s))
+    {
+        playerPanelAdd(25);
+    }
+}
+
+void Game::playerPanelAdd(int panel)
+{
+    if(playerMove == 1) playerOne.panelAdd(panel);
+    else playerTwo.panelAdd(panel);
+    switchTurns();
+}
+
+void Game::switchTurns()
+{
+    // Switch to players turn
+    if(playerMove == 1) playerMove = 2;
+    else playerMove = 1;
 }
 
 void Game::menuCloseCallback(Ref* pSender)

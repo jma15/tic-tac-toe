@@ -33,8 +33,8 @@ bool Game::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     // create players
-    Player playerOne = Player(mode);
-    Player playerTwo = Player(mode);
+    playerOne = Player(mode);
+    playerTwo = Player(mode);
     
     std::string gameModeString = "The game is " + std::to_string(mode);
     
@@ -187,12 +187,24 @@ bool Game::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event)
     Point s = touch->getLocation();
     CCLOG("TouchBegin x => %f  y => %f tag is %d", s.x, s.y, sprite->getTag());
     
-    if(panel1->boundingBox().containsPoint(s)){
+    if(panel1->boundingBox().containsPoint(s))
+    {
         CCLOG("In the SPRITEEE");
 
     }
+    else if(panel2->boundingBox().containsPoint(s)){
+        CCLOG("In the SPRITEEE");
+        
+    }
     
     return true;
+}
+
+bool Game::playerPanelAdd(int panel)
+{
+    if(playerMove == 1) playerOne.panelAdd(panel);
+    else playerTwo.panelAdd(panel);
+    
 }
 
 void Game::menuCloseCallback(Ref* pSender)

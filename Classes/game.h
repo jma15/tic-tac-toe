@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "HelloWorldScene.h"
-
+#include "Player.h"
 
 class Game : public cocos2d::Layer
 {
@@ -26,9 +26,13 @@ class Game : public cocos2d::Layer
 	cocos2d::Sprite* panel14 = nullptr;
 	cocos2d::Sprite* panel15 = nullptr;
 	cocos2d::Sprite* panel16 = nullptr;
+    
+    Player playerOne = Player(3);
+    Player playerTwo = Player(3);
 
 
 public:
+    Game() {};
 	static cocos2d::Scene* createScene(int playMode);
 	virtual bool init();
 
@@ -39,6 +43,7 @@ public:
 	void createPanel();
 	bool onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event);
 	void gameMode();
+    bool playerPanelAdd(int panel);
 
 	CREATE_FUNC(Game);
 

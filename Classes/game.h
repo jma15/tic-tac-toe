@@ -65,7 +65,6 @@ public:
     void setDisplayOpacity();
 
 	CREATE_FUNC(Game);
-
 };
 
 

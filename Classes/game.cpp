@@ -10,11 +10,11 @@ int playerMove = 1;
 
 Scene* Game::createScene(int playMode){
     auto scene = Scene::create();
-    
+
     mode = playMode;
     // 'layer' is an autorelease object
     auto layer = Game::create();
-    
+
     // add layer as a child to scene
     scene->addChild(layer);
 
@@ -24,11 +24,11 @@ Scene* Game::createScene(int playMode){
 
 bool Game::init()
 {
-    if ( !Layer::init() )
+    if (!Layer::init())
     {
         return false;
     }
-    
+
     visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -36,11 +36,17 @@ bool Game::init()
     playerOne = Player(mode);
     playerTwo = Player(mode);
     
+    std::string gameModeString = "The game is " + std::to_string(mode);
+
+    auto label = Label::createWithTTF(gameModeString, "fonts/Marker Felt.ttf", 32);
+    label->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    this->addChild(label);
+
     createBackButton();
     CCLOG("GAME");
     createDisplay();
     createPanel();
-    
+
     //single touch
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->setSwallowTouches(true);
@@ -53,7 +59,7 @@ bool Game::init()
     //detect touch cancel
     touchListener->onTouchCancelled = CC_CALLBACK_2(Game::onTouchCancelled, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
-    
+
     return true;
 }
 
@@ -61,31 +67,31 @@ void Game::createBackButton()
 {
     auto button = cocos2d::ui::Button::create("back.png");//put image in Constructor if needed
     button->addTouchEventListener([&](Ref* sender, cocos2d::ui::Widget::TouchEventType type)
-                                  {
-                                      switch (type)
-                                      {
-                                          case ui::Widget::TouchEventType::BEGAN:
-                                              goBackToTitle();
-                                              //CCLOG("Start Began");
-                                              break;
-                                          case ui::Widget::TouchEventType::ENDED:
-                                              //CCLOG("Start End");
-                                              break;
-                                          default:
-                                              //CCLOG("Start Default");
-                                              break;
-                                      }
-                                  });
+    {
+        switch (type)
+        {
+        case ui::Widget::TouchEventType::BEGAN:
+            goBackToTitle();
+            //CCLOG("Start Began");
+            break;
+        case ui::Widget::TouchEventType::ENDED:
+            //CCLOG("Start End");
+            break;
+        default:
+            //CCLOG("Start Default");
+            break;
+        }
+    });
     button->setPosition(Point(visibleSize.width * 0.9, (visibleSize.height * 0.05)));
     button->setScale(0.3f);
     this->addChild(button);
-    
+
 }
 
 void Game::goBackToTitle()
 {
     auto scene = HelloWorld::createScene();
-    Director::getInstance( )->replaceScene(scene);
+    Director::getInstance()->replaceScene(scene);
 }
 
 void Game::createDisplay()
@@ -134,41 +140,41 @@ void Game::createDisplay()
 
 void Game::createPanel()
 {
-    
+
     gameMode();
-    
+
     // Check condition, incase mode and size does not match
-    if(mode*mode != spriteArray.size())
+    if (mode*mode != spriteArray.size())
     {
         return;
     }
-    
+
     // Use 80% of screen
     float boardSizeEndx = visibleSize.width * 0.8f;
     float boardSizeStartx = visibleSize.width * 0.2f;
     float boardSizex = boardSizeEndx - boardSizeStartx;
     // 10% gap between each panel
-    float gapx = (boardSizex/mode)*0.20f;
-    float panelWidthx = boardSizex/mode - gapx;
-    
+    float gapx = (boardSizex / mode)*0.20f;
+    float panelWidthx = boardSizex / mode - gapx;
+
     // Use 80% of screen
     float boardSizeEndy = visibleSize.height * 0.8f;
     float boardSizeStarty = visibleSize.height * 0.2f;
     float boardSizey = boardSizeEndy - boardSizeStarty;
     // 10% gap between each panel
-    float gapy = (boardSizey/mode)*0.20f;
-    float panelHeight = boardSizey/mode - gapy;
-    
-    
-    for(int j = 0; j < mode; j++)
+    float gapy = (boardSizey / mode)*0.20f;
+    float panelHeight = boardSizey / mode - gapy;
+
+
+    for (int j = 0; j < mode; j++)
     {
-        for(int i = 0; i < mode; i++)
+        for (int i = 0; i < mode; i++)
         {
             int value = i + j*mode;
             //CCLOG("width is %f and gap is %f and panel width is %f", panelWidth*i, gap, panelWidth);
             spriteArray[value]->setTextureRect(Rect(0.0, 0.0, panelWidthx, panelHeight));
-            spriteArray[value]->setAnchorPoint(Vec2(0,0));
-            spriteArray[value]->setPosition( boardSizeStartx + (panelWidthx+ gapx)*i, boardSizeStarty + (panelHeight+ gapy)*j);
+            spriteArray[value]->setAnchorPoint(Vec2(0, 0));
+            spriteArray[value]->setPosition(boardSizeStartx + (panelWidthx + gapx)*i, boardSizeStarty + (panelHeight + gapy)*j);
             spriteArray[value]->setColor(Color3B(192, 192, 192));
             //CCLOG("position is %f", spriteArray[i]->getPositionX());
             this->addChild(spriteArray[value]);
@@ -198,9 +204,8 @@ void Game::gameMode()
     spriteArray.push_back(panel7);
     spriteArray.push_back(panel8);
     spriteArray.push_back(panel9);
-    
-    // mode 4 and 5
-    if(mode > 3)
+
+    if (mode > 3)
     {
         panel10 = cocos2d::Sprite::create();
         panel11 = cocos2d::Sprite::create();
@@ -209,7 +214,7 @@ void Game::gameMode()
         panel14 = cocos2d::Sprite::create();
         panel15 = cocos2d::Sprite::create();
         panel16 = cocos2d::Sprite::create();
-        
+
         spriteArray.push_back(panel10);
         spriteArray.push_back(panel11);
         spriteArray.push_back(panel12);
@@ -250,6 +255,7 @@ bool Game::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event)
     auto sprite = event->getCurrentTarget();
     Point s = touch->getLocation();
     CCLOG("TouchBegin x => %f  y => %f tag is %d", s.x, s.y, sprite->getTag());
+
     whichPanel(s);
     
     return true;
@@ -396,7 +402,7 @@ void Game::setDisplayOpacity()
 void Game::menuCloseCallback(Ref* pSender)
 {
     Director::getInstance()->end();
-    
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif

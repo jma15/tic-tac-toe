@@ -3,6 +3,12 @@
 
 USING_NS_CC;
 
+Player::Player()
+{
+    mode = -1;
+    panels = nullptr;
+}
+
 Player::Player(int gameMode)
 {
     mode = gameMode;

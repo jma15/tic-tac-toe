@@ -37,8 +37,8 @@ class Game : public cocos2d::Layer
     cocos2d::Sprite* panel24 = nullptr;
     cocos2d::Sprite* panel25 = nullptr;
     
-    Player playerOne = Player(3);
-    Player playerTwo = Player(3);
+    Player playerOne;
+    Player playerTwo;
     
     cocos2d::Label * labelOne;
     cocos2d::Sprite* labelOneBackground;

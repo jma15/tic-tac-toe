@@ -5,19 +5,16 @@ USING_NS_CC;
 
 Player::Player()
 {
-    mode = -1;
-    panels = nullptr;
+    mode = 0;
 }
 
 Player::Player(int gameMode)
 {
     mode = gameMode;
-    panels = new bool[gameMode * gameMode + 1];
 }
 
 Player::~Player()
 {
-    delete[] panels;
 }
 
 void Player::panelAdd(int panel)

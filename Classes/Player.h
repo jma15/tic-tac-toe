@@ -22,7 +22,7 @@ public:
     bool didWin();
 private:
     int mode;
-    bool *panels;
+    bool panels[50];
 };
 
 #endif // __PLAYER_H__

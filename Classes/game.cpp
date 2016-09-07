@@ -7,6 +7,7 @@ USING_NS_CC;
 
 int mode;
 int playerMove = 1;
+int totalMoves = 0;
 
 Scene* Game::createScene(int playMode){
     auto scene = Scene::create();
@@ -256,7 +257,23 @@ bool Game::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event)
     Point s = touch->getLocation();
     CCLOG("TouchBegin x => %f  y => %f tag is %d", s.x, s.y, sprite->getTag());
 
-    whichPanel(s);
+    if (playerOne.didWin())
+    {
+        CCLOG("P1 WON");
+    }
+    else if (playerTwo.didWin())
+    {
+        CCLOG("P2 WON");
+    }
+    else if (totalMoves < (mode * mode))
+    {
+        totalMoves++;
+        whichPanel(s);
+    }
+    else
+    {
+        CCLOG("TIE");
+    }
     
     return true;
 }
@@ -368,10 +385,19 @@ void Game::whichPanel(Point s)
 
 void Game::playerPanelAdd(int panel)
 {
-    if(playerMove == 1) playerOne.panelAdd(panel);
-    else playerTwo.panelAdd(panel);
-    switchTurns();
-    setDisplayOpacity();
+    if (!playerOne.isTaken(panel) && !playerTwo.isTaken(panel))
+    {
+        if (playerMove == 1)
+        {
+            playerOne.panelAdd(panel);
+        }
+        else
+        {
+            playerTwo.panelAdd(panel);
+        }
+        switchTurns();
+        setDisplayOpacity();
+    }
 }
 
 void Game::switchTurns()

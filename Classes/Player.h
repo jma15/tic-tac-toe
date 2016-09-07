@@ -1,12 +1,14 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
+#include <string>
+
 class Player
 {
 public:
     Player();
     Player(int gameMode);
-    ~Player();
+    std::string toString();
 
     /**
         Adds panel to player database
@@ -20,6 +22,14 @@ public:
         @return Boolean if player has won
     */
     bool didWin();
+    /**
+        Checks if panel is taken by player
+
+        @param panel Index number of panel (starting from 1)
+        @return Boolean if panel is taken by player
+    */
+    bool isTaken(int panel);
+
 private:
     int mode;
     bool panels[26];

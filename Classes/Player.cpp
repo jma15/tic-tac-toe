@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "ui/CocosGUI.h"
+#include <string>
 
 USING_NS_CC;
 
@@ -8,13 +9,25 @@ Player::Player()
     mode = 0;
 }
 
-Player::Player(int gameMode)
-{
+Player::Player(int gameMode) 
+{ 
     mode = gameMode;
+    for (int i = 1; i <= (mode * mode); i++)
+        panels[i] = false;
 }
 
-Player::~Player()
+std::string Player::toString()
 {
+    std::string s = "Player One Panels Taken: ";
+    /*for (int i = 1; i <= (mode * mode); i++)
+    {
+        if (panels[i])
+        {
+           s += std::to_string(i) + " ";
+        }
+    }*/
+    CCLOG("%s", s);
+    return s;
 }
 
 void Player::panelAdd(int panel)
@@ -84,6 +97,16 @@ bool Player::didWin()
         break;
     case 5:
         break;
+    }
+    return false;
+}
+
+bool Player::isTaken(int panel)
+{
+    if (panels[panel])
+    {
+        CCLOG("true %lu", panel);
+        return true;
     }
     return false;
 }

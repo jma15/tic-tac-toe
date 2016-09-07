@@ -4,16 +4,11 @@ USING_NS_CC;
 
 Scene* HelloWorld::createScene()
 {
-    // 'scene' is an autorelease object
     auto scene = Scene::create();
-
-    // 'layer' is an autorelease object
     auto layer = HelloWorld::create();
 
-    // add layer as a child to scene
     scene->addChild(layer);
 
-    // return the scene
     return scene;
 }
 
@@ -57,7 +52,7 @@ bool HelloWorld::init()
     menu_item_3->setFontNameObj("8514oem");
     menu_item_4->setFontNameObj("8514oem");
 
-    // create menu, it's an autorelease object
+    // menu
     auto menu = Menu::create(menu_item_1, menu_item_2, menu_item_3, menu_item_4, NULL);
     menu->setPositionY(origin.y + (visibleSize.height / 2.25));
     menu->alignItemsVerticallyWithPadding(20);

@@ -5,14 +5,17 @@
 
 USING_NS_CC;
 
-int mode;
-int playerMove = 1;
-int totalMoves = 0;
+int mode; // game mode size of board (3, 4, 5)
+int playerMove; // player # whose turn it is
+int totalMoves; // to keep track of moves & flag for accepting panel touch as move
 
 Scene* Game::createScene(int playMode){
     auto scene = Scene::create();
 
     mode = playMode;
+    playerMove = 1;
+    totalMoves = 0;
+
     // 'layer' is an autorelease object
     auto layer = Game::create();
 
@@ -257,23 +260,7 @@ bool Game::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event)
     Point s = touch->getLocation();
     CCLOG("TouchBegin x => %f  y => %f tag is %d", s.x, s.y, sprite->getTag());
 
-    if (playerOne.didWin())
-    {
-        CCLOG("P1 WON");
-    }
-    else if (playerTwo.didWin())
-    {
-        CCLOG("P2 WON");
-    }
-    else if (totalMoves < (mode * mode))
-    {
-        totalMoves++;
-        whichPanel(s);
-    }
-    else
-    {
-        CCLOG("TIE");
-    }
+    whichPanel(s);
     
     return true;
 }
@@ -385,18 +372,52 @@ void Game::whichPanel(Point s)
 
 void Game::playerPanelAdd(int panel)
 {
-    if (!playerOne.isTaken(panel) && !playerTwo.isTaken(panel))
+    if (totalMoves < mode * mode)
     {
-        if (playerMove == 1)
+        totalMoves++;
+        if (!playerOne.isTaken(panel) && !playerTwo.isTaken(panel))
         {
-            playerOne.panelAdd(panel);
+            if (playerMove == 1)
+            {
+                playerOne.panelAdd(panel);
+                CCLOG("%s", playerOne.toString().c_str());
+                if (playerOne.didWin())
+                {
+                    CCLOG("P1 WINS");
+                    totalMoves = 99;
+                }
+                else if (totalMoves == mode * mode)
+                {
+                    CCLOG("TIE");
+                    totalMoves = 99;
+                }
+                else
+                {
+                    switchTurns();
+                    setDisplayOpacity();
+                }
+            }
+            else
+            {
+                playerTwo.panelAdd(panel);
+                CCLOG("%s", playerTwo.toString().c_str());
+                if (playerTwo.didWin())
+                {
+                    CCLOG("P2 WINS");
+                    totalMoves = 99;
+                }
+                else if (totalMoves == mode * mode)
+                {
+                    CCLOG("TIE");
+                    totalMoves = 99;
+                }
+                else
+                {
+                    switchTurns();
+                    setDisplayOpacity();
+                }
+            }
         }
-        else
-        {
-            playerTwo.panelAdd(panel);
-        }
-        switchTurns();
-        setDisplayOpacity();
     }
 }
 

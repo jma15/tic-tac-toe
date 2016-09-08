@@ -18,15 +18,14 @@ Player::Player(int gameMode)
 
 std::string Player::toString()
 {
-    std::string s = "Player One Panels Taken: ";
-    /*for (int i = 1; i <= (mode * mode); i++)
+    std::string s = "Panels Taken: ";
+    for (int i = 1; i <= (mode * mode); i++)
     {
         if (panels[i])
         {
            s += std::to_string(i) + " ";
         }
-    }*/
-    CCLOG("%s", s);
+    }
     return s;
 }
 
@@ -96,6 +95,39 @@ bool Player::didWin()
         }
         break;
     case 5:
+        if (panels[1])
+        {
+            if ((panels[2] && panels[3] && panels[4] && panels[5])
+                || (panels[6] && panels[11] && panels[16] && panels[21])
+                || (panels[7] && panels[13] && panels[19] && panels[25]))
+                return true;
+        }
+        if (panels[13])
+        {
+            if ((panels[11] && panels[12] && panels[14] && panels[15])
+                || (panels[3] && panels[8] && panels[18] && panels[23])
+                || (panels[5] && panels[9] && panels[17] && panels[21]))
+                return true;
+        }
+        if (panels[7])
+        {
+            if ((panels[6] && panels[8] && panels[9] && panels[10])
+                || (panels[2] && panels[12] && panels[17] && panels[22]))
+                return true;
+        }
+        if (panels[19])
+        {
+            if ((panels[16] && panels[17] && panels[18] && panels[20])
+                || (panels[4] && panels[9] && panels[14] && panels[24]))
+                return true;
+        }
+        if (panels[25])
+        {
+            if ((panels[21] && panels[22] && panels[23] && panels[24])
+                || (panels[5] && panels[10] && panels[15] && panels[20]))
+                return true;
+        }
+
         break;
     }
     return false;
@@ -104,9 +136,6 @@ bool Player::didWin()
 bool Player::isTaken(int panel)
 {
     if (panels[panel])
-    {
-        CCLOG("true %lu", panel);
         return true;
-    }
     return false;
 }

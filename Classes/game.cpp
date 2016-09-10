@@ -199,7 +199,6 @@ bool Game::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event)
 {
     auto sprite = event->getCurrentTarget();
     Point s = touch->getLocation();
-    CCLOG("TouchBegin x => %f  y => %f tag is %d", s.x, s.y, sprite->getTag());
 
     whichPanel(s);
     

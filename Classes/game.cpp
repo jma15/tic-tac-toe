@@ -201,7 +201,6 @@ bool Game::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event)
     Point s = touch->getLocation();
 
     whichPanel(s);
-    
     return true;
 }
 
@@ -359,6 +358,12 @@ void Game::playerPanelAdd(int panel)
             }
         }
     }
+    // diagonal upward
+    bool test = playerOne.winGame(panel, mode+1);
+    // diagonal downward
+    bool test2 = playerOne.winGame(panel, mode-1);
+    
+    if(test || test2) CCLOG("Diagonal logic WONNNNN!!!");
 }
 
 void Game::switchTurns()

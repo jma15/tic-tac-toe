@@ -9,6 +9,7 @@ public:
     Player();
     Player(int gameMode);
     std::string toString();
+    int totalMatch = 3;
 
     /**
         Adds panel to player database
@@ -21,6 +22,7 @@ public:
 
         @return Boolean if player has won
     */
+    bool winGame(int panel, int increment);
     bool didWin();
     /**
         Checks if panel is taken by player

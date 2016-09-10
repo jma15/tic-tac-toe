@@ -49,8 +49,11 @@ bool Player::didWin(int panel)
 
 bool Player::isTaken(int panel)
 {
-    if (panels[panel])
-        return true;
+    if (panel > 0 && panel <= mode * mode)
+    {
+        if (panels[panel])
+            return true;
+    }
     return false;
 }
 
@@ -61,33 +64,10 @@ bool Player::checkHorizontal(int panel)
     int r1 = panel + 1;
     int r2 = panel + 2;
 
-    if (l1 > 0 && l1 <= mode*mode)
-    {
-        if (panels[l1])
-        {
-            if (l2 > 0 && l2 <= mode*mode)
-            {
-                if (panels[l2])
-                    return true;
-            }
-        }
-        if (r1 > 0 && r1 <= mode*mode)
-        {
-            if (panels[r1])
-                return true;
-        }
-    }
-    if (r1 > 0 && r1 <= mode*mode)
-    {
-        if (panels[r1])
-        {
-            if (r2 > 0 && r2 <= mode*mode)
-            {
-                if (panels[r2])
-                    return true;
-            }
-        }
-    }
+    if ((isTaken(l1) && isTaken(l2))
+        || (isTaken(l1) && isTaken(r1))
+        || (isTaken(r1) && isTaken(r2)))
+        return true;
 
     return false;
 }
@@ -99,33 +79,10 @@ bool Player::checkVertical(int panel)
     int d1 = panel - mode;
     int d2 = panel - mode * 2;
 
-    if (u1 > 0 && u1 <= mode*mode)
-    {
-        if (panels[u1])
-        {
-            if (u2 > 0 && u2 <= mode*mode)
-            {
-                if (panels[u2])
-                    return true;
-            }
-        }
-        if (d1 > 0 && d1 <= mode*mode)
-        {
-            if (panels[d1])
-                return true;
-        }
-    }
-    if (d1 > 0 && d1 <= mode*mode)
-    {
-        if (panels[d1])
-        {
-            if (d2 > 0 && d2 <= mode*mode)
-            {
-                if (panels[d2])
-                    return true;
-            }
-        }
-    }
+    if ((isTaken(u1) && isTaken(u2))
+        || (isTaken(u1) && isTaken(d1))
+        || (isTaken(d1) && isTaken(d2)))
+        return true;
 
     return false;
 }

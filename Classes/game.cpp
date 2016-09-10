@@ -322,7 +322,7 @@ void Game::playerPanelAdd(int panel)
             {
                 playerOne.panelAdd(panel);
                 CCLOG("%s", playerOne.toString().c_str());
-                if (playerOne.didWin())
+                if (playerOne.didWin(panel))
                 {
                     CCLOG("P1 WINS");
                     totalMoves = 99;
@@ -342,7 +342,7 @@ void Game::playerPanelAdd(int panel)
             {
                 playerTwo.panelAdd(panel);
                 CCLOG("%s", playerTwo.toString().c_str());
-                if (playerTwo.didWin())
+                if (playerTwo.didWin(panel))
                 {
                     CCLOG("P2 WINS");
                     totalMoves = 99;

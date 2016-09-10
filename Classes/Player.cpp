@@ -40,96 +40,10 @@ void Player::panelAdd(int panel)
 
 }
 
-bool Player::didWin()
+bool Player::didWin(int panel)
 {
-    switch (mode)
-    {
-    case 3:
-        if (panels[1])
-        {
-            if ((panels[2] && panels[3])
-                || (panels[4] && panels[7])
-                || (panels[5] && panels[9]))
-                return true;
-        }
-        if (panels[5])
-        {
-            if ((panels[4] && panels[6])
-                || (panels[2] && panels[8])
-                || (panels[3] && panels[7]))
-                return true;
-        }
-        if (panels[9])
-        {
-            if ((panels[7] && panels[8])
-                || (panels[3] && panels[6]))
-                return true;
-        }
-        break;
-    case 4:
-        if (panels[1])
-        {
-            if ((panels[2] && panels[3] && panels[4])
-                || (panels[5] && panels[9] && panels[13])
-                || (panels[6] && panels[11] && panels[16]))
-                return true;
-        }
-        if (panels[10])
-        {
-            if ((panels[9] && panels[11] && panels[12])
-                || (panels[2] && panels[6] && panels[14])
-                || (panels[4] && panels[7] && panels[13]))
-                return true;
-        }
-        if (panels[7])
-        {
-            if ((panels[5] && panels[6] && panels[8])
-                || (panels[3] && panels[11] && panels[15]))
-                return true;
-        }
-        if (panels[16])
-        {
-            if ((panels[13] && panels[14] && panels[15])
-                || (panels[4] && panels[8] && panels[12]))
-                return true;
-        }
-        break;
-    case 5:
-        if (panels[1])
-        {
-            if ((panels[2] && panels[3] && panels[4] && panels[5])
-                || (panels[6] && panels[11] && panels[16] && panels[21])
-                || (panels[7] && panels[13] && panels[19] && panels[25]))
-                return true;
-        }
-        if (panels[13])
-        {
-            if ((panels[11] && panels[12] && panels[14] && panels[15])
-                || (panels[3] && panels[8] && panels[18] && panels[23])
-                || (panels[5] && panels[9] && panels[17] && panels[21]))
-                return true;
-        }
-        if (panels[7])
-        {
-            if ((panels[6] && panels[8] && panels[9] && panels[10])
-                || (panels[2] && panels[12] && panels[17] && panels[22]))
-                return true;
-        }
-        if (panels[19])
-        {
-            if ((panels[16] && panels[17] && panels[18] && panels[20])
-                || (panels[4] && panels[9] && panels[14] && panels[24]))
-                return true;
-        }
-        if (panels[25])
-        {
-            if ((panels[21] && panels[22] && panels[23] && panels[24])
-                || (panels[5] && panels[10] && panels[15] && panels[20]))
-                return true;
-        }
-
-        break;
-    }
+    if (checkHorizontal(panel) || checkVertical(panel))
+        return true;
     return false;
 }
 
@@ -137,5 +51,81 @@ bool Player::isTaken(int panel)
 {
     if (panels[panel])
         return true;
+    return false;
+}
+
+bool Player::checkHorizontal(int panel)
+{
+    int l1 = panel - 1;
+    int l2 = panel - 2;
+    int r1 = panel + 1;
+    int r2 = panel + 2;
+
+    if (l1 > 0 && l1 <= mode*mode)
+    {
+        if (panels[l1])
+        {
+            if (l2 > 0 && l2 <= mode*mode)
+            {
+                if (panels[l2])
+                    return true;
+            }
+        }
+        if (r1 > 0 && r1 <= mode*mode)
+        {
+            if (panels[r1])
+                return true;
+        }
+    }
+    if (r1 > 0 && r1 <= mode*mode)
+    {
+        if (panels[r1])
+        {
+            if (r2 > 0 && r2 <= mode*mode)
+            {
+                if (panels[r2])
+                    return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool Player::checkVertical(int panel)
+{
+    int u1 = panel + mode;
+    int u2 = panel + mode * 2;
+    int d1 = panel - mode;
+    int d2 = panel - mode * 2;
+
+    if (u1 > 0 && u1 <= mode*mode)
+    {
+        if (panels[u1])
+        {
+            if (u2 > 0 && u2 <= mode*mode)
+            {
+                if (panels[u2])
+                    return true;
+            }
+        }
+        if (d1 > 0 && d1 <= mode*mode)
+        {
+            if (panels[d1])
+                return true;
+        }
+    }
+    if (d1 > 0 && d1 <= mode*mode)
+    {
+        if (panels[d1])
+        {
+            if (d2 > 0 && d2 <= mode*mode)
+            {
+                if (panels[d2])
+                    return true;
+            }
+        }
+    }
+
     return false;
 }

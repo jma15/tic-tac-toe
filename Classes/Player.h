@@ -16,12 +16,15 @@ public:
         @param panel Index number of panel (starting from 1)
     */
     void panelAdd(int panel);
+
     /**
         Checks if player has winning combination of panels
 
+        @param panel Index of latest selected panel
         @return Boolean if player has won
     */
-    bool didWin();
+    bool didWin(int panel);
+
     /**
         Checks if panel is taken by player
 
@@ -29,6 +32,9 @@ public:
         @return Boolean if panel is taken by player
     */
     bool isTaken(int panel);
+
+    bool checkHorizontal(int panel);
+    bool checkVertical(int panel);
 
 private:
     int mode;

@@ -90,8 +90,11 @@ bool Player::winGame(int panel, int increment)
             if (isTaken(tempPanel))
             {
                 // if currently checking horizontal && is in same row, then win++
-                if (increment == 1 && tempPanelRow == ceil(panel / static_cast<double>(mode)))
-                    winCounter++; 
+                if (increment == 1)
+                {
+                    if(tempPanelRow == ceil(panel / static_cast<double>(mode)))
+                        winCounter++;
+                }
                 // else if checking diagonal && is an edge panel, then edge++ & win++
                 else if (increment == mode + 1 || increment == mode - 1)
                 {

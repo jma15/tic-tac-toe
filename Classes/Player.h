@@ -7,9 +7,8 @@ class Player
 {
 public:
     Player();
-    Player(int gameMode);
+    Player(int gameMode, int match);
     std::string toString();
-    int totalMatch = 3;
 
     /**
         Adds panel to player database
@@ -33,10 +32,10 @@ public:
 
 private:
     int mode;
+    int totalMatch;
     bool panels[26];
     bool checkWin(int panel, int increment);
-    bool checkHorizontal(int panel);
-    bool checkVertical(int panel);
+    bool winGame(int panel, int increment);
 };
 
 #endif // __PLAYER_H__

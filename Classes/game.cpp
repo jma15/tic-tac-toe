@@ -6,6 +6,7 @@
 USING_NS_CC;
 
 int mode; // game mode size of board (3, 4, 5)
+int matchesToWin = 3; // matches in a row to win
 int playerMove; // player # whose turn it is
 int totalMoves; // to keep track of moves & flag for accepting panel touch as move
 
@@ -37,8 +38,8 @@ bool Game::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     // create players
-    playerOne = Player(mode);
-    playerTwo = Player(mode);
+    playerOne = Player(mode, matchesToWin);
+    playerTwo = Player(mode, matchesToWin);
     
     std::string gameModeString = "The game is " + std::to_string(mode);
 
@@ -199,10 +200,8 @@ bool Game::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event *event)
 {
     auto sprite = event->getCurrentTarget();
     Point s = touch->getLocation();
-    CCLOG("TouchBegin x => %f  y => %f tag is %d", s.x, s.y, sprite->getTag());
 
     whichPanel(s);
-    
     return true;
 }
 
@@ -327,18 +326,8 @@ void Game::playerPanelAdd(int panel)
                     CCLOG("P1 WINS");
                     totalMoves = 99;
                 }
-                else if (totalMoves == mode * mode)
-                {
-                    CCLOG("TIE");
-                    totalMoves = 99;
-                }
-                else
-                {
-                    switchTurns();
-                    setDisplayOpacity();
-                }
             }
-            else
+            else if (playerMove == 2)
             {
                 playerTwo.panelAdd(panel);
                 CCLOG("%s", playerTwo.toString().c_str());
@@ -347,16 +336,17 @@ void Game::playerPanelAdd(int panel)
                     CCLOG("P2 WINS");
                     totalMoves = 99;
                 }
-                else if (totalMoves == mode * mode)
-                {
-                    CCLOG("TIE");
-                    totalMoves = 99;
-                }
-                else
-                {
-                    switchTurns();
-                    setDisplayOpacity();
-                }
+            }
+
+            if (totalMoves == mode * mode)
+            {
+                CCLOG("TIE");
+                totalMoves = 99;
+            }
+            else if (totalMoves < mode * mode)
+            {
+                switchTurns();
+                setDisplayOpacity();
             }
         }
     }

@@ -63,58 +63,22 @@ bool Player::didWin(int panel)
 
 bool Player::winGame(int panel, int increment)
 {
-    bool win = false;
-    int winCounter = 1;
-    int tempPanel = panel;
+    int winCounter = 0;
+    int startPanel = panel;
 
-    // Check backward the last two panels
-    for(int i = 0; i <= totalMatch - 1; i++)
+    for (int i = -1 * (totalMatch - 1); i <= 0; i++)
     {
-        //CCLOG("In first reverse is %d", tempPanel);
-        // Go back one diagonal
-        tempPanel = tempPanel - increment;
-        // If panel is available and player owns it
-        if(isTaken(tempPanel)) winCounter++;
-        else break;
-    }
-    // wins from past two panels
-    if(winCounter == totalMatch) return true;
-    
-    // Reset the counters
-    int startCounter = 1;
-    winCounter = 1;
-    //CCLOG("TESTING %d panel is %d and increment is %d", panel-increment, panel, increment);
-
-    // Go back one panel and start going up
-    if(isTaken(panel - increment))
-    {
-        // Go back one panel
-        tempPanel = panel - increment;
-        // reset counter to start from one panel behind
-        startCounter = 0;
-    }
-    else
-    {
-        // Stay in current Panel, and check the next two
-        tempPanel = panel;
-    }
-    
-    // Check one panel back and three forward, at most check 4 panel, startCounter is 0,1,2,3
-    for(startCounter; startCounter <= totalMatch; startCounter++)
-    {
-        //CCLOG("In second forward is %d, counter is %d and winCounter is %d", tempPanel, startCounter, winCounter);
-        // If panel is available and player owns it, else there is a break and didnt win yet
-        if(tempPanel > 0 && isTaken(tempPanel)) winCounter++;
-        else
+        winCounter = 0;
+        startPanel = panel + (i * increment);
+        for (int j = 0; j < totalMatch; j++)
         {
-            //CCLOG("BREAK NOW in second reverse");
-            break;
+            if (isTaken(startPanel + (j * increment)))
+                winCounter++;
         }
-        tempPanel = tempPanel + increment;
+        if (winCounter == totalMatch)
+            return true;
     }
-    
-    if(winCounter > 3) return true;
-    
+
     return false;
 }
 

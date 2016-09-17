@@ -37,15 +37,32 @@ bool Game::init()
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
 
+    // background sprite
+    auto background_sprite = Sprite::create("tic-tac-toe_background_game.png");
+    background_sprite->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    this->addChild(background_sprite, 0);
+
+    // grid overlay sprite
+    auto grid_sprite = Sprite::create("tic-tac-toe_3x3_grid.png");
+    switch (mode)
+    {
+    case 3:
+        break;
+    case 4:
+        grid_sprite = Sprite::create("tic-tac-toe_4x4_grid.png");
+        break;
+    case 5:
+        grid_sprite = Sprite::create("tic-tac-toe_5x5_grid.png");
+        break;
+    default:
+        CCLOG("ERROR: Defaulted to 3x3 grid. Invalid game mode encountered.");
+    }
+    grid_sprite->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    this->addChild(grid_sprite, 0);
+
     // create players
     playerOne = Player(mode, matchesToWin);
     playerTwo = Player(mode, matchesToWin);
-    
-    std::string gameModeString = "The game is " + std::to_string(mode);
-
-    auto label = Label::createWithTTF(gameModeString, "fonts/Marker Felt.ttf", 32);
-    label->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-    this->addChild(label);
 
     createBackButton();
     CCLOG("GAME");
@@ -100,9 +117,7 @@ void Game::goBackToTitle()
 }
 
 void Game::createDisplay()
-{
-    //std::string gameModeString = "The game is " + std::to_string(mode);
-    
+{   
     // declare percentage
     float labelOnePositionX = origin.x;
     float labelOnePositionY = visibleSize.height*0.90f + origin.y;
@@ -181,6 +196,7 @@ void Game::createPanel()
             spriteArray[value]->setAnchorPoint(Vec2(0, 0));
             spriteArray[value]->setPosition(boardSizeStartx + (panelWidthx + gapx)*i, boardSizeStarty + (panelHeight + gapy)*j);
             spriteArray[value]->setColor(Color3B(192, 192, 192));
+            spriteArray[value]->setTexture("trans.png");
             //CCLOG("position is %f", spriteArray[i]->getPositionX());
             this->addChild(spriteArray[value]);
         }

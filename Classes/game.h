@@ -8,6 +8,8 @@
 class Game : public cocos2d::Layer
 {
 	cocos2d::Size visibleSize;
+    cocos2d::Vec2 origin;
+
 	std::vector<cocos2d::Sprite*> spriteArray;
     
     Player playerOne;

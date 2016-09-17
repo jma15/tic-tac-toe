@@ -35,7 +35,7 @@ bool Game::init()
     }
 
     visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    origin = Director::getInstance()->getVisibleOrigin();
 
     // create players
     playerOne = Player(mode, matchesToWin);
@@ -87,7 +87,7 @@ void Game::createBackButton()
             break;
         }
     });
-    button->setPosition(Point(visibleSize.width * 0.9, (visibleSize.height * 0.05)));
+    button->setPosition(Point(visibleSize.width * 0.9 + origin.x, visibleSize.height * 0.05 + origin.y));
     button->setScale(0.3f);
     this->addChild(button);
 
@@ -104,11 +104,11 @@ void Game::createDisplay()
     //std::string gameModeString = "The game is " + std::to_string(mode);
     
     // declare percentage
-    float labelOnePositionX = 0;
-    float labelOnePositionY = visibleSize.height*0.90f;
-    float labelTwoPositionX = visibleSize.width*0.81f;
-    float labelTwoPositionY = visibleSize.height*0.90f;
-    float labelWidth = visibleSize.width * 0.18f;
+    float labelOnePositionX = origin.x;
+    float labelOnePositionY = visibleSize.height*0.90f + origin.y;
+    float labelTwoPositionX = visibleSize.width*0.81f + origin.x;
+    float labelTwoPositionY = visibleSize.height*0.90f + origin.y;
+    float labelWidth = visibleSize.width * 0.18f + origin.x;
     
     // create label one
     labelOne = Label::createWithTTF("Player One", "fonts/Marker Felt.ttf",32);
@@ -155,16 +155,16 @@ void Game::createPanel()
     }
 
     // Use 80% of screen
-    float boardSizeEndx = visibleSize.width * 0.8f;
-    float boardSizeStartx = visibleSize.width * 0.2f;
+    float boardSizeEndx = visibleSize.width * 0.8f + origin.x;
+    float boardSizeStartx = visibleSize.width * 0.2f + origin.x;
     float boardSizex = boardSizeEndx - boardSizeStartx;
     // 10% gap between each panel
     float gapx = (boardSizex / mode)*0.20f;
     float panelWidthx = boardSizex / mode - gapx;
 
     // Use 80% of screen
-    float boardSizeEndy = visibleSize.height * 0.8f;
-    float boardSizeStarty = visibleSize.height * 0.2f;
+    float boardSizeEndy = visibleSize.height * 0.8f + origin.y;
+    float boardSizeStarty = visibleSize.height * 0.2f + origin.y;
     float boardSizey = boardSizeEndy - boardSizeStarty;
     // 10% gap between each panel
     float gapy = (boardSizey / mode)*0.20f;

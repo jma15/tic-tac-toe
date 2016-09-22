@@ -65,7 +65,8 @@ bool Player::didWin(int panel)
 bool Player::winGame(int panel, int increment)
 {
     int winCounter = 0;
-    int edgeCounter = 0;
+    int diagonalCounter = 0;
+    int prevDiagonal = 0;
 
     int startPanel = panel;
     int tempPanel = panel;
@@ -76,8 +77,8 @@ bool Player::winGame(int panel, int increment)
     {
         // set counters & startPanel index number
         winCounter = 0;
-        edgeCounter = 0;
         startPanel = panel + (i * increment);
+        prevDiagonal = ceil(startPanel / static_cast<double>(mode));
 
         // check if there are (totalMatch) panels in a row
         for (int j = 0; j < totalMatch; j++)
@@ -85,6 +86,7 @@ bool Player::winGame(int panel, int increment)
             // current panel being checked & its row #
             tempPanel = startPanel + (j * increment);
             tempPanelRow = ceil(tempPanel / static_cast<double>(mode));
+            diagonalCounter = ceil(tempPanel / static_cast<double>(mode));
 
             // if current panel isTaken by player
             if (isTaken(tempPanel))
@@ -95,24 +97,27 @@ bool Player::winGame(int panel, int increment)
                     if(tempPanelRow == ceil(panel / static_cast<double>(mode)))
                         winCounter++;
                 }
-                // else if checking diagonal && is an edge panel, then edge++ & win++
-                else if (increment == mode + 1 || increment == mode - 1)
+                // else if checking diag row is == prev diag row + 1, prevdiag++ & win++
+                else if (increment == mode + 1)
                 {
-                    winCounter++;
-                    // check if panel is on the edge of board
-                    if (tempPanelRow == mode || tempPanelRow == 1
-                        || tempPanel % mode == 1 || tempPanel % mode == 0)
-                        edgeCounter++;
+                    if(diagonalCounter == prevDiagonal){
+                        prevDiagonal++;
+                        winCounter++;
+                    }
+                }
+                else if (increment == mode - 1)
+                {
+                    if(diagonalCounter == prevDiagonal){
+                        prevDiagonal++;
+                        winCounter++;
+                    }
+                    
                 }
                 // else just win++
                 else
                     winCounter++;
             }
         }
-
-        // if there were more than 2 edges, panels not in same diagonal
-        if (edgeCounter > 2)
-            return false;
         // if panels in a row == totalMatch, then win
         if (winCounter == totalMatch)
             return true;

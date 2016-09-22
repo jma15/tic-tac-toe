@@ -65,7 +65,6 @@ bool Player::didWin(int panel)
 bool Player::winGame(int panel, int increment)
 {
     int winCounter = 0;
-    int edgeCounter = 0;
     int diagonalCounter = 0;
     int prevDiagonal = 0;
 
@@ -78,7 +77,6 @@ bool Player::winGame(int panel, int increment)
     {
         // set counters & startPanel index number
         winCounter = 0;
-        edgeCounter = 0;
         startPanel = panel + (i * increment);
         prevDiagonal = ceil(startPanel / static_cast<double>(mode));
 
@@ -99,14 +97,13 @@ bool Player::winGame(int panel, int increment)
                     if(tempPanelRow == ceil(panel / static_cast<double>(mode)))
                         winCounter++;
                 }
-                // else if checking diagonal && is an edge panel, then edge++ & win++
+                // else if checking diag row is == prev diag row + 1, prevdiag++ & win++
                 else if (increment == mode + 1)
                 {
                     if(diagonalCounter == prevDiagonal){
                         prevDiagonal++;
                         winCounter++;
                     }
-
                 }
                 else if (increment == mode - 1)
                 {
@@ -121,10 +118,6 @@ bool Player::winGame(int panel, int increment)
                     winCounter++;
             }
         }
-
-        // if there were more than 2 edges, panels not in same diagonal
-        if (edgeCounter > 2)
-            return false;
         // if panels in a row == totalMatch, then win
         if (winCounter == totalMatch)
             return true;

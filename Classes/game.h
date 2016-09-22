@@ -19,6 +19,9 @@ class Game : public cocos2d::Layer
     cocos2d::Sprite* labelOneBackground;
     cocos2d::Label * labelTwo;
     cocos2d::Sprite* labelTwoBackground;
+    
+    // 0 means no one wins, 1 is player1 and 2 is player2
+    int gameWon;
 
 
 public:
@@ -39,6 +42,7 @@ public:
     void switchTurns();
     void setDisplayOpacity();
     void changePanel(int panel);
+    bool checkGameOver();
 
 	CREATE_FUNC(Game);
 };

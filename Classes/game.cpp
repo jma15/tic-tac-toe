@@ -133,8 +133,8 @@ void Game::createDisplay()
     float labelOnePositionY = visibleSize.height*0.90f + origin.y;
     float labelTwoPositionX = visibleSize.width*0.81f + origin.x;
     float labelTwoPositionY = visibleSize.height*0.90f + origin.y;
-    float labelWidth = visibleSize.width * 0.18f + origin.x;
-    
+    float labelWidth = visibleSize.width * 0.19f + origin.x;
+        
     // create label one
     labelOne = Label::createWithTTF("Player One", "fonts/Marker Felt.ttf",32);
     labelOne->setAnchorPoint(Vec2(0,0));

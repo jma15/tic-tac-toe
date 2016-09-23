@@ -2,7 +2,7 @@
 #include "game.h"
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
-#include <CCActionCamera.h>
+//#include <CCActionCamera.h>
 
 USING_NS_CC;
 

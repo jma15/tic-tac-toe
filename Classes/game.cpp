@@ -205,8 +205,8 @@ void Game::createPanel()
             spriteArray[value]->setTextureRect(Rect(0.0, 0.0, panelWidthx, panelHeight));
             //spriteArray[value]->setAnchorPoint(Vec2(0, 0));
             spriteArray[value]->setPosition(boardSizeStartx + (panelWidthx + gapx)*i + spriteArray[i]->getContentSize().width/2, boardSizeStarty + (panelHeight + gapy)*j + spriteArray[j]->getContentSize().height/2);
-            spriteArray[value]->setColor(Color3B(192, 192, 192));
-            spriteArray[value]->setTexture("trans.png");
+            //spriteArray[value]->setColor(Color3B(192, 192, 192));
+            //spriteArray[value]->setTexture("trans.png");
             //CCLOG("position is %f", spriteArray[i]->getPositionX());
             this->addChild(spriteArray[value]);
         }

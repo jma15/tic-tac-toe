@@ -340,15 +340,12 @@ void Game::playerPanelAdd(int panel)
     // If the game is over, do not do anything on panel click
     if(checkGameOver()) return;
     
-    // Animate panel
-    changePanel(panel-1);
-    
     // Add the panel to the player
     if (totalMoves < mode * mode)
     {
-        totalMoves++;
         if (!playerOne.isTaken(panel) && !playerTwo.isTaken(panel))
         {
+            totalMoves++;
             if (playerMove == 1)
             {
                 playerOne.panelAdd(panel);
@@ -381,6 +378,10 @@ void Game::playerPanelAdd(int panel)
             }
             else if (totalMoves < mode * mode)
             {
+                
+                // Animate panel
+                changePanel(panel-1);
+                
                 switchTurns();
                 setDisplayOpacity();
             }

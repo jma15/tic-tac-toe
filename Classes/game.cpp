@@ -2,7 +2,7 @@
 #include "game.h"
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
-#include <CCActionCamera.h>
+//#include <CCActionCamera.h>
 
 USING_NS_CC;
 
@@ -64,6 +64,15 @@ bool Game::init()
     // create players
     playerOne = Player(mode, matchesToWin);
     playerTwo = Player(mode, matchesToWin);
+
+    //std::string gameModeString = "The game is " + std::to_string(mode);
+
+    //auto label = Label::createWithTTF(gameModeString, "fonts/Marker Felt.ttf", 32);
+    //label->setPosition(Point(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+    //this->addChild(label);
+    
+    // Declare the gameWon as 0
+    gameWon = 0;
 
     createBackButton();
     CCLOG("GAME");
@@ -329,7 +338,13 @@ void Game::whichPanel(Point s)
 
 void Game::playerPanelAdd(int panel)
 {
+    // If the game is over, do not do anything on panel click
+    if(checkGameOver()) return;
+    
+    // Change the panel color
     changePanel(panel-1);
+    
+    // Add the panel to the player
     if (totalMoves < mode * mode)
     {
         totalMoves++;
@@ -343,6 +358,7 @@ void Game::playerPanelAdd(int panel)
                 {
                     CCLOG("P1 WINS");
                     totalMoves = 99;
+                    gameWon = 1;
                 }
             }
             else if (playerMove == 2)
@@ -353,6 +369,7 @@ void Game::playerPanelAdd(int panel)
                 {
                     CCLOG("P2 WINS");
                     totalMoves = 99;
+                    gameWon = 2;
                 }
             }
 
@@ -411,6 +428,15 @@ void Game::changePanel(int panel)
     else spriteArray[panel]->setColor(Color3B(255, 0, 0));
 
 }
+
+bool Game::checkGameOver()
+{
+    // if game is not over, return false
+    if(gameWon == 0) return false;
+    
+    return true;
+}
+
 
 void Game::menuCloseCallback(Ref* pSender)
 {

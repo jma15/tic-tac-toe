@@ -2,6 +2,7 @@
 #include "game.h"
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
+#include <CCActionCamera.h>
 
 USING_NS_CC;
 
@@ -193,8 +194,8 @@ void Game::createPanel()
             int value = i + j*mode;
             //CCLOG("width is %f and gap is %f and panel width is %f", panelWidth*i, gap, panelWidth);
             spriteArray[value]->setTextureRect(Rect(0.0, 0.0, panelWidthx, panelHeight));
-            spriteArray[value]->setAnchorPoint(Vec2(0, 0));
-            spriteArray[value]->setPosition(boardSizeStartx + (panelWidthx + gapx)*i, boardSizeStarty + (panelHeight + gapy)*j);
+            //spriteArray[value]->setAnchorPoint(Vec2(0, 0));
+            spriteArray[value]->setPosition(boardSizeStartx + (panelWidthx + gapx)*i + spriteArray[i]->getContentSize().width/2, boardSizeStarty + (panelHeight + gapy)*j + spriteArray[j]->getContentSize().height/2);
             spriteArray[value]->setColor(Color3B(192, 192, 192));
             spriteArray[value]->setTexture("trans.png");
             //CCLOG("position is %f", spriteArray[i]->getPositionX());
@@ -328,6 +329,7 @@ void Game::whichPanel(Point s)
 
 void Game::playerPanelAdd(int panel)
 {
+    changePanel(panel-1);
     if (totalMoves < mode * mode)
     {
         totalMoves++;
@@ -391,6 +393,23 @@ void Game::setDisplayOpacity()
         labelTwo->setOpacity(255);
         labelTwoBackground->setOpacity(255);
     }
+}
+
+void Game::changePanel(int panel)
+{
+    // creates orbit camera for flipping
+    OrbitCamera* camera = cocos2d::OrbitCamera::create(1.0f, 1, 0, 0.0f, 720.0f, 0, 0);
+    auto seq = Sequence::create(camera, nullptr);
+    // add rotation to panel
+    spriteArray[panel]->runAction(seq);
+    
+    // change color
+    if(playerMove == 1)
+    {
+        spriteArray[panel]->setColor(Color3B(0, 128, 0));
+    }
+    else spriteArray[panel]->setColor(Color3B(255, 0, 0));
+
 }
 
 void Game::menuCloseCallback(Ref* pSender)

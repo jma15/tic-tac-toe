@@ -38,6 +38,7 @@ public:
     void playerPanelAdd(int panel);
     void switchTurns();
     void setDisplayOpacity();
+    void changePanel(int panel);
 
 	CREATE_FUNC(Game);
 };

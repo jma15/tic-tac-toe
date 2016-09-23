@@ -43,6 +43,7 @@ public:
     void setDisplayOpacity();
     void changePanel(int panel);
     bool checkGameOver();
+    void setPanelMarker(int panel, int player);
 
 	CREATE_FUNC(Game);
 };

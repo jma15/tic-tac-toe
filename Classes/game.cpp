@@ -205,8 +205,7 @@ void Game::createPanel()
             spriteArray[value]->setTextureRect(Rect(0.0, 0.0, panelWidthx, panelHeight));
             //spriteArray[value]->setAnchorPoint(Vec2(0, 0));
             spriteArray[value]->setPosition(boardSizeStartx + (panelWidthx + gapx)*i + spriteArray[i]->getContentSize().width/2, boardSizeStarty + (panelHeight + gapy)*j + spriteArray[j]->getContentSize().height/2);
-            //spriteArray[value]->setColor(Color3B(192, 192, 192));
-            //spriteArray[value]->setTexture("trans.png");
+            spriteArray[value]->setOpacity(0);
             //CCLOG("position is %f", spriteArray[i]->getPositionX());
             this->addChild(spriteArray[value]);
         }
@@ -341,7 +340,7 @@ void Game::playerPanelAdd(int panel)
     // If the game is over, do not do anything on panel click
     if(checkGameOver()) return;
     
-    // Change the panel color
+    // Animate panel
     changePanel(panel-1);
     
     // Add the panel to the player
@@ -353,6 +352,7 @@ void Game::playerPanelAdd(int panel)
             if (playerMove == 1)
             {
                 playerOne.panelAdd(panel);
+                setPanelMarker(panel, 1);
                 CCLOG("%s", playerOne.toString().c_str());
                 if (playerOne.didWin(panel))
                 {
@@ -364,6 +364,7 @@ void Game::playerPanelAdd(int panel)
             else if (playerMove == 2)
             {
                 playerTwo.panelAdd(panel);
+                setPanelMarker(panel, 2);
                 CCLOG("%s", playerTwo.toString().c_str());
                 if (playerTwo.didWin(panel))
                 {
@@ -419,14 +420,6 @@ void Game::changePanel(int panel)
     auto seq = Sequence::create(camera, nullptr);
     // add rotation to panel
     spriteArray[panel]->runAction(seq);
-    
-    // change color
-    if(playerMove == 1)
-    {
-        spriteArray[panel]->setColor(Color3B(0, 128, 0));
-    }
-    else spriteArray[panel]->setColor(Color3B(255, 0, 0));
-
 }
 
 bool Game::checkGameOver()
@@ -445,4 +438,29 @@ void Game::menuCloseCallback(Ref* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
+}
+
+void Game::setPanelMarker(int panel, int player)
+{
+    std::string texture;
+    switch (mode)
+    {
+    case 3:
+        if (player == 1) texture = "tic-tac-toe_3x3_x.png";
+        else texture = "tic-tac-toe_3x3_o.png";
+        break;
+    case 4:
+        if (player == 1) texture = "tic-tac-toe_4x4_x.png";
+        else texture = "tic-tac-toe_4x4_o.png";
+        break;
+    case 5:
+        if (player == 1) texture = "tic-tac-toe_5x5_x.png";
+        else texture = "tic-tac-toe_5x5_o.png";
+        break;
+    default:
+        CCLOG("Invalid game mode %lu. Panel marker fail.", panel);
+    }
+
+    spriteArray[panel - 1]->setTexture(texture);
+    spriteArray[panel - 1]->setOpacity(255);
 }

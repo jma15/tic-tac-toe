@@ -7,7 +7,7 @@
 USING_NS_CC;
 
 int mode; // game mode size of board (3, 4, 5)
-int matchesToWin = 3; // matches in a row to win
+int matchesToWin; // matches in a row to win
 int playerMove; // player # whose turn it is
 int totalMoves; // to keep track of moves & flag for accepting panel touch as move
 
@@ -61,7 +61,19 @@ bool Game::init()
     grid_sprite->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(grid_sprite, 0);
 
-    // create players
+    // set matches to win and create players
+    switch (mode)
+    {
+    case 3:
+        matchesToWin = 3;
+        break;
+    case 4: case 5: matchesToWin = 4;
+        break;
+    default:
+        matchesToWin = 3;
+        CCLOG("Invalid game mode. Matches to win set to 3.");
+    }
+
     playerOne = Player(mode, matchesToWin);
     playerTwo = Player(mode, matchesToWin);
 
@@ -359,6 +371,12 @@ void Game::playerPanelAdd(int panel)
                     CCLOG("P1 WINS");
                     totalMoves = 99;
                     gameWon = 1;
+                    for (int i = 0; i < matchesToWin; i++)
+                    {
+                        CCParticleSystemQuad* fire;
+                        fire = CCParticleFire::create();
+                        spriteArray[playerOne.getWinningCombo()[i] - 1]->getPosition;
+                    }
                 }
             }
             else if (playerMove == 2)

@@ -9,6 +9,7 @@ public:
     Player();
     Player(int gameMode, int match);
     std::string toString();
+    int winningCombo[4];
 
     /**
         Adds panel to player database
@@ -29,6 +30,7 @@ public:
         @return Boolean if panel is taken by player
     */
     bool isTaken(int panel);
+    int* getWinningCombo();
 
 private:
     int mode;

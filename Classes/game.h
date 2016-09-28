@@ -22,6 +22,9 @@ class Game : public cocos2d::Layer
     
     // 0 means no one wins, 1 is player1 and 2 is player2
     int gameWon;
+    
+    cocos2d::Vec2 firePosition;
+    std::vector<cocos2d::Vec2> fireArray;
 
 
 public:
@@ -44,7 +47,7 @@ public:
     void changePanel(int panel);
     bool checkGameOver();
     void setPanelMarker(int panel, int player);
-    void setFire(cocos2d::Vec2 position);
+    void setFire(float dt);
 
 	CREATE_FUNC(Game);
 };

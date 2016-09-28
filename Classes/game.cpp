@@ -372,8 +372,11 @@ void Game::playerPanelAdd(int panel)
                     gameWon = 1;
                     for (int i = 0; i < matchesToWin; i++)
                     {
-                        setFire(Vec2(spriteArray[playerOne.getWinningCombo()[i] - 1]->getPosition()));
-                        CCLOG("%lu", playerOne.getWinningCombo()[i]);
+                        firePosition = Vec2(spriteArray[playerOne.getWinningCombo()[i] - 1]->getPosition());
+                        fireArray.push_back(firePosition);
+                        //CCLOG("Postition is %f and %f", firePosition.x, firePosition.y);
+                        this->schedule( schedule_selector(Game::setFire), 1.0f );
+                        //CCLOG("%lu", playerOne.getWinningCombo()[i]);
                     }
                 }
             }
@@ -389,8 +392,11 @@ void Game::playerPanelAdd(int panel)
                     gameWon = 2;
                     for (int i = 0; i < matchesToWin; i++)
                     {
-                        setFire(Vec2(spriteArray[playerTwo.getWinningCombo()[i] - 1]->getPosition()));
-                        CCLOG("%lu", playerTwo.getWinningCombo()[i]);
+                        firePosition = Vec2(spriteArray[playerTwo.getWinningCombo()[i] - 1]->getPosition());
+                        fireArray.push_back(firePosition);
+                        //CCLOG("Postition is %f and %f", firePosition.x, firePosition.y);
+                        this->schedule( schedule_selector(Game::setFire), 1.0f );
+                        //CCLOG("%lu", playerTwo.getWinningCombo()[i]);
                     }
                 }
             }
@@ -486,11 +492,13 @@ void Game::setPanelMarker(int panel, int player)
     spriteArray[panel - 1]->setOpacity(255);
 }
 
-void Game::setFire(Vec2 position)
+void Game::setFire(float dt)
 {
-    CCLOG("Fire!");
+    //CCLOG("Fire! position is %f and %f", firePosition.x, firePosition.y);
     CCParticleSystemQuad* fire = CCParticleFire::create();
-    fire->setPosition(position);
+    fire->setPosition(fireArray[0]);
+    fireArray.erase(fireArray.begin());
+    if(fireArray.size() <= 0) this->unschedule( schedule_selector(Game::setFire));
     fire->setEmitterMode(kCCParticleModeGravity);
     fire->setGravity(ccp(0, 90));
     fire->setLife(0.5);

@@ -387,6 +387,11 @@ void Game::playerPanelAdd(int panel)
                     CCLOG("P2 WINS");
                     totalMoves = 99;
                     gameWon = 2;
+                    for (int i = 0; i < matchesToWin; i++)
+                    {
+                        setFire(Vec2(spriteArray[playerTwo.getWinningCombo()[i] - 1]->getPosition()));
+                        CCLOG("%lu", playerTwo.getWinningCombo()[i]);
+                    }
                 }
             }
 
@@ -489,5 +494,7 @@ void Game::setFire(Vec2 position)
     fire->setEmitterMode(kCCParticleModeGravity);
     fire->setGravity(ccp(0, 90));
     fire->setLife(0.5);
+    //fire->setStartColor(Color4F(242, 125, 12, 100));
+    //fire->setEndColor(Color4F(242, 125, 12, 100));
     this->addChild(fire);
 }

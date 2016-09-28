@@ -44,6 +44,7 @@ public:
     void changePanel(int panel);
     bool checkGameOver();
     void setPanelMarker(int panel, int player);
+    void setFire(cocos2d::Vec2 position);
 
 	CREATE_FUNC(Game);
 };

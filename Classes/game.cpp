@@ -2,7 +2,6 @@
 #include "game.h"
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
-//#include <CCActionCamera.h>
 
 USING_NS_CC;
 
@@ -373,9 +372,8 @@ void Game::playerPanelAdd(int panel)
                     gameWon = 1;
                     for (int i = 0; i < matchesToWin; i++)
                     {
-                        CCParticleSystemQuad* fire;
-                        fire = CCParticleFire::create();
-                        spriteArray[playerOne.getWinningCombo()[i] - 1]->getPosition;
+                        setFire(Vec2(spriteArray[playerOne.getWinningCombo()[i] - 1]->getPosition()));
+                        CCLOG("%lu", playerOne.getWinningCombo()[i]);
                     }
                 }
             }
@@ -481,4 +479,15 @@ void Game::setPanelMarker(int panel, int player)
 
     spriteArray[panel - 1]->setTexture(texture);
     spriteArray[panel - 1]->setOpacity(255);
+}
+
+void Game::setFire(Vec2 position)
+{
+    CCLOG("Fire!");
+    CCParticleSystemQuad* fire = CCParticleFire::create();
+    fire->setPosition(position);
+    fire->setEmitterMode(kCCParticleModeGravity);
+    fire->setGravity(ccp(0, 90));
+    fire->setLife(0.5);
+    this->addChild(fire);
 }

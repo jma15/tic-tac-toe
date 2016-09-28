@@ -121,8 +121,8 @@ bool Player::winGame(int panel, int increment)
                 // else just win++
                 else
                 {
-                    winCounter++;
                     winningCombo[winCounter] = tempPanel;
+                    winCounter++;
                 }
             }
         }

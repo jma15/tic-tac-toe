@@ -495,14 +495,14 @@ void Game::setPanelMarker(int panel, int player)
 void Game::setFire(float dt)
 {
     //CCLOG("Fire! position is %f and %f", firePosition.x, firePosition.y);
-    CCParticleSystemQuad* fire = CCParticleFire::create();
+    CCParticleFire* fire = CCParticleFire::create();
+    fire->setLife(0.5);
+    fire->setBlendFunc(BlendFunc::ALPHA_PREMULTIPLIED);
+    fire->setStartColor(Color4F(1.0, 1.0, 0.76, 0.5));
+    fire->setEndColor(Color4F(0.93, 0.27, 0.03, 0.4));
+
     fire->setPosition(fireArray[0]);
     fireArray.erase(fireArray.begin());
     if(fireArray.size() <= 0) this->unschedule( schedule_selector(Game::setFire));
-    fire->setEmitterMode(kCCParticleModeGravity);
-    fire->setGravity(ccp(0, 90));
-    fire->setLife(0.5);
-    //fire->setStartColor(Color4F(242, 125, 12, 100));
-    //fire->setEndColor(Color4F(242, 125, 12, 100));
     this->addChild(fire);
 }

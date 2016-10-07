@@ -25,6 +25,9 @@ class Game : public cocos2d::Layer
     
     cocos2d::Vec2 firePosition;
     std::vector<cocos2d::Vec2> fireArray;
+    
+    // game over label
+    cocos2d::Label * gameLabel;
 
 
 public:
@@ -48,6 +51,7 @@ public:
     bool checkGameOver();
     void setPanelMarker(int panel, int player);
     void setFire(float dt);
+    void showWinStatus();
 
 	CREATE_FUNC(Game);
 };

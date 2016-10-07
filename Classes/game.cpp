@@ -89,7 +89,7 @@ bool Game::init()
     CCLOG("GAME");
     createDisplay();
     createPanel();
-
+    
     //single touch
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->setSwallowTouches(true);
@@ -370,6 +370,7 @@ void Game::playerPanelAdd(int panel)
                     CCLOG("P1 WINS");
                     totalMoves = 99;
                     gameWon = 1;
+                    showWinStatus();
                     for (int i = 0; i < matchesToWin; i++)
                     {
                         firePosition = Vec2(spriteArray[playerOne.getWinningCombo()[i] - 1]->getPosition());
@@ -390,6 +391,7 @@ void Game::playerPanelAdd(int panel)
                     CCLOG("P2 WINS");
                     totalMoves = 99;
                     gameWon = 2;
+                    showWinStatus();
                     for (int i = 0; i < matchesToWin; i++)
                     {
                         firePosition = Vec2(spriteArray[playerTwo.getWinningCombo()[i] - 1]->getPosition());
@@ -405,6 +407,7 @@ void Game::playerPanelAdd(int panel)
             {
                 CCLOG("TIE");
                 totalMoves = 99;
+                showWinStatus();
             }
             else if (totalMoves < mode * mode)
             {
@@ -505,4 +508,70 @@ void Game::setFire(float dt)
     fireArray.erase(fireArray.begin());
     if(fireArray.size() <= 0) this->unschedule( schedule_selector(Game::setFire));
     this->addChild(fire);
+}
+
+void Game::showWinStatus()
+{
+
+    labelOne->removeFromParentAndCleanup(true);
+    labelOneBackground->removeFromParentAndCleanup(true);
+    labelTwo->removeFromParentAndCleanup(true);
+    labelTwoBackground->removeFromParentAndCleanup(true);
+    
+    std::string gameName = "";
+    Color3B color = Color3B(0,0,0);
+    int topHeight = visibleSize.height*0.9f;
+    
+    if(gameWon == 1)
+    {
+        gameName = "PLAYER 1 WINS";
+        color = Color3B(0, 128, 0);
+        
+        // reset the string
+        labelOne = Label::createWithTTF(gameName, "fonts/Marker Felt.ttf",32);
+        
+        // create background color
+        labelOneBackground = cocos2d::Sprite::create();
+        labelOneBackground->setTextureRect(Rect(0.0, 0.0, visibleSize.width, visibleSize.height*0.1f));
+        labelOneBackground->setAnchorPoint(Vec2(0,0));
+        labelOneBackground->setPosition(0, topHeight);
+        labelOneBackground->setColor(Color3B(0, 128, 0));
+        this->addChild(labelOneBackground);
+        
+        labelOne->setAnchorPoint(Vec2(0, 0));
+        float positionX = (visibleSize.width - labelOne->getContentSize().width)/2;
+        labelOne->setPosition(positionX, topHeight);
+        labelOne->setColor(Color3B(0,0,0));
+        
+        this->addChild(labelOne);
+        
+    }
+    else if(gameWon == 2)
+    {
+        gameName = "PLAYER 2 WINS";
+        color = Color3B(0, 128, 0);
+        
+        // reset the string
+        labelTwo = Label::createWithTTF(gameName, "fonts/Marker Felt.ttf",32);
+        
+        // create background color
+        labelTwoBackground = cocos2d::Sprite::create();
+        labelTwoBackground->setTextureRect(Rect(0.0, 0.0, visibleSize.width, visibleSize.height*0.1f));
+        labelTwoBackground->setAnchorPoint(Vec2(0,0));
+        labelTwoBackground->setPosition(0, topHeight);
+        labelTwoBackground->setColor(Color3B(255, 0, 0));
+        this->addChild(labelTwoBackground);
+        
+        labelTwo->setAnchorPoint(Vec2(0, 0));
+        float positionX = (visibleSize.width - labelTwo->getContentSize().width)/2;
+        labelTwo->setPosition(positionX, topHeight);
+        labelTwo->setColor(Color3B(0,0,0));
+        
+        this->addChild(labelTwo);
+        
+    }
+    else
+    {
+        gameName = "TIE";
+    }
 }

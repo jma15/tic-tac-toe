@@ -54,6 +54,7 @@ public:
     void setPanelMarker(int panel, int player);
     void setFire(float dt);
     void showWinStatus();
+    void slideOut();
 
 	CREATE_FUNC(Game);
 };

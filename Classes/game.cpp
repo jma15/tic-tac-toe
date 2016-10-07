@@ -512,11 +512,7 @@ void Game::setFire(float dt)
 
 void Game::showWinStatus()
 {
-
-    labelOne->removeFromParentAndCleanup(true);
-    labelOneBackground->removeFromParentAndCleanup(true);
-    labelTwo->removeFromParentAndCleanup(true);
-    labelTwoBackground->removeFromParentAndCleanup(true);
+    slideOut();
     
     std::string gameName = "";
     Color3B color = Color3B(0,0,0);
@@ -583,3 +579,17 @@ void Game::showWinStatus()
     
 }
 
+void Game::slideOut()
+{
+    // slide out the top labels
+    auto moveToLabelLeft = MoveBy::create(2, Vec2(-visibleSize.width, 0));
+    labelOne->runAction(moveToLabelLeft);
+    auto moveToLabelLeftB = MoveBy::create(2, Vec2(-visibleSize.width, 0));
+    labelOneBackground->runAction(moveToLabelLeftB);
+   
+    auto moveToLabelRight = MoveBy::create(2, Vec2(visibleSize.width, 0));
+    labelTwo->runAction(moveToLabelRight);
+    auto moveToLabelRightB = MoveBy::create(2, Vec2(visibleSize.width, 0));
+    labelTwoBackground->runAction(moveToLabelRightB);
+    
+}

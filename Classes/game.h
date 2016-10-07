@@ -55,6 +55,7 @@ public:
     void setFire(float dt);
     void showWinStatus();
     void slideOut();
+    void slideIn();
 
 	CREATE_FUNC(Game);
 };

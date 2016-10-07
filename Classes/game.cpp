@@ -407,7 +407,7 @@ void Game::playerPanelAdd(int panel)
             {
                 CCLOG("TIE");
                 totalMoves = 99;
-                showWinStatus();
+                slideIn();
             }
             else if (totalMoves < mode * mode)
             {
@@ -434,7 +434,7 @@ void Game::setDisplayOpacity()
         labelOne->setOpacity(255);
         labelOneBackground->setOpacity(255);
     }
-    else
+    else if(playerMove == 2)
     {
         labelOne->setOpacity(128);
         labelOneBackground->setOpacity(128);
@@ -581,6 +581,7 @@ void Game::showWinStatus()
 
 void Game::slideOut()
 {
+    
     // slide depending on who won the game
     if(gameWon == 2)
     {
@@ -606,3 +607,31 @@ void Game::slideOut()
 
     
 }
+
+// This is for TIE
+void Game::slideIn()
+{
+    labelTwo->setOpacity(255);
+    labelTwoBackground->setOpacity(255);
+    labelOne->setOpacity(255);
+    labelOneBackground->setOpacity(255);
+    
+    // reset new label to longer length
+    labelOneBackground->setTextureRect(Rect(0.0, 0.0, visibleSize.width/2, visibleSize.height*0.9f));
+    // Set the position a little back
+    float positionX = labelOneBackground->getContentSize().width - labelOne->getContentSize().width;
+    labelOneBackground->setPosition(Vec2(-positionX,visibleSize.height*0.9f));
+    // Move it to the right
+    auto moveToLabelRight = MoveTo::create(2, Vec2(0, visibleSize.height*0.9f));
+    labelOneBackground->runAction(moveToLabelRight);
+    
+    // reset new label to longer length
+    labelTwoBackground->setTextureRect(Rect(0.0, 0.0, visibleSize.width/2, visibleSize.height*0.9f));
+    // Set the position a little back
+    positionX = labelTwoBackground->getContentSize().width + labelTwo->getContentSize().width;
+    labelTwoBackground->setPosition(Vec2(positionX,visibleSize.height*0.9f));
+    // Move it to the right
+    auto moveToLabelLeft = MoveTo::create(2, Vec2(visibleSize.width/2, visibleSize.height*0.9f));
+    labelTwoBackground->runAction(moveToLabelLeft);
+}
+

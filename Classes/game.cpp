@@ -581,15 +581,28 @@ void Game::showWinStatus()
 
 void Game::slideOut()
 {
-    // slide out the top labels
-    auto moveToLabelLeft = MoveBy::create(2, Vec2(-visibleSize.width, 0));
-    labelOne->runAction(moveToLabelLeft);
-    auto moveToLabelLeftB = MoveBy::create(2, Vec2(-visibleSize.width, 0));
-    labelOneBackground->runAction(moveToLabelLeftB);
-   
-    auto moveToLabelRight = MoveBy::create(2, Vec2(visibleSize.width, 0));
-    labelTwo->runAction(moveToLabelRight);
-    auto moveToLabelRightB = MoveBy::create(2, Vec2(visibleSize.width, 0));
-    labelTwoBackground->runAction(moveToLabelRightB);
+    // slide depending on who won the game
+    if(gameWon == 2)
+    {
+        // slide out the top labels
+        auto moveToLabelLeft = MoveBy::create(2, Vec2(-visibleSize.width, 0));
+        labelOne->runAction(moveToLabelLeft);
+        auto moveToLabelLeftB = MoveBy::create(2, Vec2(-visibleSize.width, 0));
+        labelOneBackground->runAction(moveToLabelLeftB);
+        
+        removeChild(labelTwo);
+        removeChild(labelTwoBackground);
+    }
+    else if(gameWon == 1)
+    {
+        auto moveToLabelRight = MoveBy::create(2, Vec2(visibleSize.width, 0));
+        labelTwo->runAction(moveToLabelRight);
+        auto moveToLabelRightB = MoveBy::create(2, Vec2(visibleSize.width, 0));
+        labelTwoBackground->runAction(moveToLabelRightB);
+        
+        removeChild(labelOne);
+        removeChild(labelOneBackground);
+    }
+
     
 }

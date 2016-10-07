@@ -510,10 +510,13 @@ void Game::setFire(float dt)
     this->addChild(fire);
 }
 
+// Win Animation after someone Wins
 void Game::showWinStatus()
 {
+    // Slide out the correct side first
     slideOut();
     
+    // Set basic variables
     std::string gameName = "";
     Color3B color = Color3B(0,0,0);
     int topHeight = visibleSize.height*0.9f;
@@ -526,14 +529,14 @@ void Game::showWinStatus()
     {
         gameName = "PLAYER 1 WINS";
         color = Color3B(0, 128, 0);
-        positionXBackground = -visibleSize.width;
+        positionXBackground = -(visibleSize.width - labelOne->getContentSize().width);
         
     }
     else if(gameWon == 2)
     {
         gameName = "PLAYER 2 WINS";
         color = Color3B(255, 0, 0);
-        positionXBackground = visibleSize.width;
+        positionXBackground = visibleSize.width - labelTwo->getContentSize().width;
         
     }
 
@@ -548,12 +551,14 @@ void Game::showWinStatus()
     winLabelBackground->setColor(color);
     this->addChild(winLabelBackground);
     
+    // Move winLabel Background
     auto moveTo = MoveTo::create(2, Vec2(0, topHeight));
     winLabelBackground->runAction(moveTo);
-    
+
     winLabel->setAnchorPoint(Vec2(0, 0));
     positionX = (visibleSize.width - winLabel->getContentSize().width)/2;
     
+    // Set more variables after
     if(gameWon == 1)
     {
         // position of the label to start with
@@ -577,8 +582,15 @@ void Game::showWinStatus()
     auto moveToLabel = MoveBy::create(2, Vec2(movePosition, 0));
     winLabel->runAction(moveToLabel);
     
+    // Ending Remove the previous displays
+    removeChild(labelTwo);
+    removeChild(labelTwoBackground);
+    removeChild(labelOne);
+    removeChild(labelOneBackground);
+    
 }
 
+// Win Animation after someone Wins
 void Game::slideOut()
 {
     
@@ -590,9 +602,6 @@ void Game::slideOut()
         labelOne->runAction(moveToLabelLeft);
         auto moveToLabelLeftB = MoveBy::create(2, Vec2(-visibleSize.width, 0));
         labelOneBackground->runAction(moveToLabelLeftB);
-        
-        removeChild(labelTwo);
-        removeChild(labelTwoBackground);
     }
     else if(gameWon == 1)
     {
@@ -600,17 +609,13 @@ void Game::slideOut()
         labelTwo->runAction(moveToLabelRight);
         auto moveToLabelRightB = MoveBy::create(2, Vec2(visibleSize.width, 0));
         labelTwoBackground->runAction(moveToLabelRightB);
-        
-        removeChild(labelOne);
-        removeChild(labelOneBackground);
     }
-
-    
 }
 
 // This is for TIE
 void Game::slideIn()
 {
+    // Reset all the opacity regardless who went last
     labelTwo->setOpacity(255);
     labelTwoBackground->setOpacity(255);
     labelOne->setOpacity(255);

@@ -521,57 +521,65 @@ void Game::showWinStatus()
     std::string gameName = "";
     Color3B color = Color3B(0,0,0);
     int topHeight = visibleSize.height*0.9f;
+    float positionX = 0;
+    float positionXBackground = 0;
+    float positionXLabel = 0;
+    float movePosition = 0;
     
     if(gameWon == 1)
     {
         gameName = "PLAYER 1 WINS";
         color = Color3B(0, 128, 0);
-        
-        // reset the string
-        labelOne = Label::createWithTTF(gameName, "fonts/Marker Felt.ttf",32);
-        
-        // create background color
-        labelOneBackground = cocos2d::Sprite::create();
-        labelOneBackground->setTextureRect(Rect(0.0, 0.0, visibleSize.width, visibleSize.height*0.1f));
-        labelOneBackground->setAnchorPoint(Vec2(0,0));
-        labelOneBackground->setPosition(0, topHeight);
-        labelOneBackground->setColor(Color3B(0, 128, 0));
-        this->addChild(labelOneBackground);
-        
-        labelOne->setAnchorPoint(Vec2(0, 0));
-        float positionX = (visibleSize.width - labelOne->getContentSize().width)/2;
-        labelOne->setPosition(positionX, topHeight);
-        labelOne->setColor(Color3B(0,0,0));
-        
-        this->addChild(labelOne);
+        positionXBackground = -visibleSize.width;
         
     }
     else if(gameWon == 2)
     {
         gameName = "PLAYER 2 WINS";
-        color = Color3B(0, 128, 0);
-        
-        // reset the string
-        labelTwo = Label::createWithTTF(gameName, "fonts/Marker Felt.ttf",32);
-        
-        // create background color
-        labelTwoBackground = cocos2d::Sprite::create();
-        labelTwoBackground->setTextureRect(Rect(0.0, 0.0, visibleSize.width, visibleSize.height*0.1f));
-        labelTwoBackground->setAnchorPoint(Vec2(0,0));
-        labelTwoBackground->setPosition(0, topHeight);
-        labelTwoBackground->setColor(Color3B(255, 0, 0));
-        this->addChild(labelTwoBackground);
-        
-        labelTwo->setAnchorPoint(Vec2(0, 0));
-        float positionX = (visibleSize.width - labelTwo->getContentSize().width)/2;
-        labelTwo->setPosition(positionX, topHeight);
-        labelTwo->setColor(Color3B(0,0,0));
-        
-        this->addChild(labelTwo);
+        color = Color3B(255, 0, 0);
+        positionXBackground = visibleSize.width;
         
     }
-    else
+
+    // reset the string
+    winLabel = Label::createWithTTF(gameName, "fonts/Marker Felt.ttf",32);
+    
+    // create background color
+    winLabelBackground = cocos2d::Sprite::create();
+    winLabelBackground->setTextureRect(Rect(0.0, 0.0, visibleSize.width, visibleSize.height*0.1f));
+    winLabelBackground->setAnchorPoint(Vec2(0,0));
+    winLabelBackground->setPosition(positionXBackground, topHeight);
+    winLabelBackground->setColor(color);
+    this->addChild(winLabelBackground);
+    
+    auto moveTo = MoveTo::create(2, Vec2(0, topHeight));
+    winLabelBackground->runAction(moveTo);
+    
+    winLabel->setAnchorPoint(Vec2(0, 0));
+    positionX = (visibleSize.width - winLabel->getContentSize().width)/2;
+    
+    if(gameWon == 1)
     {
-        gameName = "TIE";
+        // position of the label to start with
+        positionXLabel = -positionX;
+        
+        // move it to the right
+        movePosition = visibleSize.width - winLabel->getContentSize().width;
     }
+    else if (gameWon == 2)
+    {
+        // position of the label to start with
+        positionXLabel = positionX + visibleSize.width;
+        
+        // move it to the left
+        movePosition = -visibleSize.width;
+    }
+    winLabel->setPosition(positionXLabel, topHeight);
+    
+    this->addChild(winLabel);
+    
+    auto moveToLabel = MoveBy::create(2, Vec2(movePosition, 0));
+    winLabel->runAction(moveToLabel);
+    
 }
+

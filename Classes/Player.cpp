@@ -94,14 +94,18 @@ bool Player::winGame(int panel, int increment)
                 // if currently checking horizontal && is in same row, then win++
                 if (increment == 1)
                 {
-                    if(tempPanelRow == ceil(panel / static_cast<double>(mode)))
+                    if (tempPanelRow == ceil(panel / static_cast<double>(mode)))
+                    {
+                        winningCombo[winCounter] = tempPanel;
                         winCounter++;
+                    }
                 }
                 // else if checking diag row is == prev diag row + 1, prevdiag++ & win++
                 else if (increment == mode + 1)
                 {
                     if(diagonalCounter == prevDiagonal){
                         prevDiagonal++;
+                        winningCombo[winCounter] = tempPanel;
                         winCounter++;
                     }
                 }
@@ -109,13 +113,17 @@ bool Player::winGame(int panel, int increment)
                 {
                     if(diagonalCounter == prevDiagonal){
                         prevDiagonal++;
+                        winningCombo[winCounter] = tempPanel;
                         winCounter++;
                     }
                     
                 }
                 // else just win++
                 else
+                {
+                    winningCombo[winCounter] = tempPanel;
                     winCounter++;
+                }
             }
         }
         // if panels in a row == totalMatch, then win
@@ -134,4 +142,9 @@ bool Player::isTaken(int panel)
             return true;
     }
     return false;
+}
+
+int* Player::getWinningCombo()
+{
+    return winningCombo;
 }

@@ -19,9 +19,17 @@ class Game : public cocos2d::Layer
     cocos2d::Sprite* labelOneBackground;
     cocos2d::Label * labelTwo;
     cocos2d::Sprite* labelTwoBackground;
+    cocos2d::Label * winLabel;
+    cocos2d::Sprite* winLabelBackground;
     
     // 0 means no one wins, 1 is player1 and 2 is player2
     int gameWon;
+    
+    cocos2d::Vec2 firePosition;
+    std::vector<cocos2d::Vec2> fireArray;
+    
+    // game over label
+    cocos2d::Label * gameLabel;
 
 
 public:
@@ -44,6 +52,10 @@ public:
     void changePanel(int panel);
     bool checkGameOver();
     void setPanelMarker(int panel, int player);
+    void setFire(float dt);
+    void showWinStatus();
+    void slideOut();
+    void slideIn();
 
 	CREATE_FUNC(Game);
 };

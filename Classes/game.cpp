@@ -2,12 +2,11 @@
 #include "game.h"
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
-//#include <CCActionCamera.h>
 
 USING_NS_CC;
 
 int mode; // game mode size of board (3, 4, 5)
-int matchesToWin = 3; // matches in a row to win
+int matchesToWin; // matches in a row to win
 int playerMove; // player # whose turn it is
 int totalMoves; // to keep track of moves & flag for accepting panel touch as move
 
@@ -61,7 +60,19 @@ bool Game::init()
     grid_sprite->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
     this->addChild(grid_sprite, 0);
 
-    // create players
+    // set matches to win and create players
+    switch (mode)
+    {
+    case 3:
+        matchesToWin = 3;
+        break;
+    case 4: case 5: matchesToWin = 4;
+        break;
+    default:
+        matchesToWin = 3;
+        CCLOG("Invalid game mode. Matches to win set to 3.");
+    }
+
     playerOne = Player(mode, matchesToWin);
     playerTwo = Player(mode, matchesToWin);
 
@@ -78,7 +89,7 @@ bool Game::init()
     CCLOG("GAME");
     createDisplay();
     createPanel();
-
+    
     //single touch
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->setSwallowTouches(true);
@@ -356,6 +367,15 @@ void Game::playerPanelAdd(int panel)
                     CCLOG("P1 WINS");
                     totalMoves = 99;
                     gameWon = 1;
+                    showWinStatus();
+                    for (int i = 0; i < matchesToWin; i++)
+                    {
+                        firePosition = Vec2(spriteArray[playerOne.getWinningCombo()[i] - 1]->getPosition());
+                        fireArray.push_back(firePosition);
+                        //CCLOG("Postition is %f and %f", firePosition.x, firePosition.y);
+                        this->schedule( schedule_selector(Game::setFire), 1.0f );
+                        //CCLOG("%lu", playerOne.getWinningCombo()[i]);
+                    }
                 }
             }
             else if (playerMove == 2)
@@ -368,6 +388,15 @@ void Game::playerPanelAdd(int panel)
                     CCLOG("P2 WINS");
                     totalMoves = 99;
                     gameWon = 2;
+                    showWinStatus();
+                    for (int i = 0; i < matchesToWin; i++)
+                    {
+                        firePosition = Vec2(spriteArray[playerTwo.getWinningCombo()[i] - 1]->getPosition());
+                        fireArray.push_back(firePosition);
+                        //CCLOG("Postition is %f and %f", firePosition.x, firePosition.y);
+                        this->schedule( schedule_selector(Game::setFire), 1.0f );
+                        //CCLOG("%lu", playerTwo.getWinningCombo()[i]);
+                    }
                 }
             }
 
@@ -375,6 +404,7 @@ void Game::playerPanelAdd(int panel)
             {
                 CCLOG("TIE");
                 totalMoves = 99;
+                slideIn();
             }
             else if (totalMoves < mode * mode)
             {
@@ -405,7 +435,7 @@ void Game::setDisplayOpacity()
         labelOne->setOpacity(255);
         labelOneBackground->setOpacity(255);
     }
-    else
+    else if(playerMove == 2)
     {
         labelOne->setOpacity(128);
         labelOneBackground->setOpacity(128);
@@ -465,3 +495,149 @@ void Game::setPanelMarker(int panel, int player)
     spriteArray[panel - 1]->setTexture(texture);
     spriteArray[panel - 1]->setOpacity(255);
 }
+
+void Game::setFire(float dt)
+{
+    //CCLOG("Fire! position is %f and %f", firePosition.x, firePosition.y);
+    CCParticleFire* fire = CCParticleFire::create();
+    fire->setLife(0.5);
+    fire->setBlendFunc(BlendFunc::ALPHA_PREMULTIPLIED);
+    fire->setStartColor(Color4F(1.0, 1.0, 0.76, 0.5));
+    fire->setEndColor(Color4F(0.93, 0.27, 0.03, 0.4));
+
+    fire->setPosition(fireArray[0]);
+    fireArray.erase(fireArray.begin());
+    if(fireArray.size() <= 0) this->unschedule( schedule_selector(Game::setFire));
+    this->addChild(fire);
+}
+
+// Win Animation after someone Wins
+void Game::showWinStatus()
+{
+    // Slide out the correct side first
+    slideOut();
+    
+    // Set basic variables
+    std::string gameName = "";
+    Color3B color = Color3B(0,0,0);
+    int topHeight = visibleSize.height*0.9f;
+    float positionX = 0;
+    float positionXBackground = 0;
+    float positionXLabel = 0;
+    float movePosition = 0;
+    
+    if(gameWon == 1)
+    {
+        gameName = "PLAYER 1 WINS";
+        color = Color3B(0, 128, 0);
+        positionXBackground = -(visibleSize.width - labelOne->getContentSize().width);
+        
+    }
+    else if(gameWon == 2)
+    {
+        gameName = "PLAYER 2 WINS";
+        color = Color3B(255, 0, 0);
+        positionXBackground = visibleSize.width - labelTwo->getContentSize().width;
+        
+    }
+
+    // reset the string
+    winLabel = Label::createWithTTF(gameName, "fonts/Marker Felt.ttf",32);
+    
+    // create background color
+    winLabelBackground = cocos2d::Sprite::create();
+    winLabelBackground->setTextureRect(Rect(0.0, 0.0, visibleSize.width, visibleSize.height*0.1f));
+    winLabelBackground->setAnchorPoint(Vec2(0,0));
+    winLabelBackground->setPosition(positionXBackground, topHeight);
+    winLabelBackground->setColor(color);
+    this->addChild(winLabelBackground);
+    
+    // Move winLabel Background
+    auto moveTo = MoveTo::create(2, Vec2(0, topHeight));
+    winLabelBackground->runAction(moveTo);
+
+    winLabel->setAnchorPoint(Vec2(0, 0));
+    positionX = (visibleSize.width - winLabel->getContentSize().width)/2;
+    
+    // Set more variables after
+    if(gameWon == 1)
+    {
+        // position of the label to start with
+        positionXLabel = -positionX;
+        
+        // move it to the right
+        movePosition = visibleSize.width - winLabel->getContentSize().width;
+    }
+    else if (gameWon == 2)
+    {
+        // position of the label to start with
+        positionXLabel = positionX + visibleSize.width;
+        
+        // move it to the left
+        movePosition = -visibleSize.width;
+    }
+    winLabel->setPosition(positionXLabel, topHeight);
+    
+    this->addChild(winLabel);
+    
+    auto moveToLabel = MoveBy::create(2, Vec2(movePosition, 0));
+    winLabel->runAction(moveToLabel);
+    
+    // Ending Remove the previous displays
+    removeChild(labelTwo);
+    removeChild(labelTwoBackground);
+    removeChild(labelOne);
+    removeChild(labelOneBackground);
+    
+}
+
+// Win Animation after someone Wins
+void Game::slideOut()
+{
+    
+    // slide depending on who won the game
+    if(gameWon == 2)
+    {
+        // slide out the top labels
+        auto moveToLabelLeft = MoveBy::create(2, Vec2(-visibleSize.width, 0));
+        labelOne->runAction(moveToLabelLeft);
+        auto moveToLabelLeftB = MoveBy::create(2, Vec2(-visibleSize.width, 0));
+        labelOneBackground->runAction(moveToLabelLeftB);
+    }
+    else if(gameWon == 1)
+    {
+        auto moveToLabelRight = MoveBy::create(2, Vec2(visibleSize.width, 0));
+        labelTwo->runAction(moveToLabelRight);
+        auto moveToLabelRightB = MoveBy::create(2, Vec2(visibleSize.width, 0));
+        labelTwoBackground->runAction(moveToLabelRightB);
+    }
+}
+
+// This is for TIE
+void Game::slideIn()
+{
+    // Reset all the opacity regardless who went last
+    labelTwo->setOpacity(255);
+    labelTwoBackground->setOpacity(255);
+    labelOne->setOpacity(255);
+    labelOneBackground->setOpacity(255);
+    
+    // reset new label to longer length
+    labelOneBackground->setTextureRect(Rect(0.0, 0.0, visibleSize.width/2, visibleSize.height*0.9f));
+    // Set the position a little back
+    float positionX = labelOneBackground->getContentSize().width - labelOne->getContentSize().width;
+    labelOneBackground->setPosition(Vec2(-positionX,visibleSize.height*0.9f));
+    // Move it to the right
+    auto moveToLabelRight = MoveTo::create(2, Vec2(0, visibleSize.height*0.9f));
+    labelOneBackground->runAction(moveToLabelRight);
+    
+    // reset new label to longer length
+    labelTwoBackground->setTextureRect(Rect(0.0, 0.0, visibleSize.width/2, visibleSize.height*0.9f));
+    // Set the position a little back
+    positionX = labelTwoBackground->getContentSize().width + labelTwo->getContentSize().width;
+    labelTwoBackground->setPosition(Vec2(positionX,visibleSize.height*0.9f));
+    // Move it to the right
+    auto moveToLabelLeft = MoveTo::create(2, Vec2(visibleSize.width/2, visibleSize.height*0.9f));
+    labelTwoBackground->runAction(moveToLabelLeft);
+}
+
